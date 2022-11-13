@@ -69,8 +69,10 @@ void Main_menu::update() {
     }
 }
 
-void Main_menu::display(sf::RenderWindow *window) {
+std::unique_ptr<sf::RenderWindow> Main_menu::display(std::unique_ptr<sf::RenderWindow> window) {
     window->draw(game_title);
     window->draw(play_button);
     window->draw(quit_button);
+
+    return window;
 }

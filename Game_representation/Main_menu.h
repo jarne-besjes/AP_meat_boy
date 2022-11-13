@@ -5,6 +5,7 @@
 #ifndef MEAT_BOY_MAIN_MENU_H
 #define MEAT_BOY_MAIN_MENU_H
 #include "SFML/Graphics.hpp"
+#include <memory>
 
 class Game;
 
@@ -12,8 +13,6 @@ class Main_menu {
     Game &game;
 
     sf::Font main_font;
-
-    sf::RenderWindow *window;
 
     sf::Text game_title;
     sf::Text play_button;
@@ -31,7 +30,7 @@ public:
 
     void draw();
 
-    void display(sf::RenderWindow *window);
+    std::unique_ptr<sf::RenderWindow> display(std::unique_ptr<sf::RenderWindow> window);
 
 };
 

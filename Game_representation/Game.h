@@ -6,6 +6,7 @@
 #define PLOTTER_GAME_H
 #include "SFML/Graphics.hpp"
 #include "Main_menu.h"
+#include <memory>
 #include "../Game_logic/World.h"
 #include "../Game_logic/Player.h"
 
@@ -18,9 +19,9 @@ class Game {
 
     sf::Font main_font;
 
-    sf::RenderWindow *window;
+    //sf::RenderWindow *window;
 
-    //std::unique_ptr<sf::RenderWindow> window;
+    std::unique_ptr<sf::RenderWindow> window;
 
     std::string current_level;
 

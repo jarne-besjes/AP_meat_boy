@@ -8,11 +8,14 @@ static int WINDOW_WIDTH = 800;
 static int WINDOW_HEIGHT = 600;
 
 Game::Game() : menu(Main_menu(*this)) {
-    window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Meat Boy");
+
+    window = std::make_unique<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Meat boy!");
+
     main_font.loadFromFile("Game_representation/assets/Debrosee.ttf");
 }
 
 void Game::loop() {
+    bool left, right, down, up = false;
         while (window->isOpen()) {
             sf::Event event;
             while (window->pollEvent(event)) {
@@ -20,13 +23,23 @@ void Game::loop() {
                     window->close();
                 if (event.type == sf::Event::KeyPressed) {
                     if (event.key.code == sf::Keyboard::Right)
-                        world.get_player().key_pressed(Direction::RIGHT);
+                        right = true;
                     if (event.key.code == sf::Keyboard::Left)
-                        world.get_player().key_pressed(Direction::LEFT);
+                        left = true;
                     if (event.key.code == sf::Keyboard::Up)
-                        world.get_player().key_pressed(Direction::UP);
+                        up = true;
                     if (event.key.code == sf::Keyboard::Down)
-                        world.get_player().key_pressed(Direction::DOWN);
+                        down = true;
+                }
+                if (event.type == sf::Event::KeyReleased) {
+                    if (event.key.code == sf::Keyboard::Right)
+                        right = false;
+                    if (event.key.code == sf::Keyboard::Left)
+                        left = false;
+                    if (event.key.code == sf::Keyboard::Up)
+                        up = false;
+                    if (event.key.code == sf::Keyboard::Down)
+                        down = false;
                 }
             }
 
@@ -34,9 +47,10 @@ void Game::loop() {
             if (show_menu) {
                 window->clear();
                 menu.draw();
-                menu.display(window);
+                window = menu.display(std::move(window));
                 menu.update();
             } else {
+                world.get_player().key_pressed(left, right, down, up);
                 world.get_player().update();
                 display_level();
             }
@@ -60,7 +74,6 @@ void Game::display_level() {
 }
 
 Game::~Game() {
-    delete window;
 }
 
 void Game::close_window() {
