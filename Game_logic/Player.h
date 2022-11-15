@@ -5,29 +5,35 @@
 #ifndef MEAT_BOY_PLAYER_H
 #define MEAT_BOY_PLAYER_H
 
-enum class Direction {
-    LEFT,
-    RIGHT,
-    UP,
-    DOWN
-};
+#include "../Observer.h"
 
+// Use this to easily pass position to the representation library
 struct Position {
     double x;
     double y;
 };
 
-class Player {
+struct Hitbox {
+    double x;
+    double y;
+    int w;
+    int h;
+};
+
+class Player : public IObservable{
     double position_x, position_y;
     double velocity_x, velocity_y;
 
-public:
-    void key_pressed(Direction direction);
+    bool jumping = false;
 
-    void update();
+public:
+    void key_pressed(bool left, bool right, bool down, bool up);
+
+    void update(bool left, bool right, bool down, bool up);
 
     Position get_position();
 
+    Hitbox get_hitbox();
 };
 
 

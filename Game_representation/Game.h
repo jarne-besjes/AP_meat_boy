@@ -11,7 +11,7 @@
 #include "../Game_logic/Player.h"
 
 
-class Game {
+class Game : public IObserver, public std::enable_shared_from_this<Game> {
 
     World world;
 
@@ -27,6 +27,10 @@ class Game {
 
     Main_menu menu;
 public:
+
+    void add_game_to_player_observer();
+
+    void update() override;
 
     Game();
 

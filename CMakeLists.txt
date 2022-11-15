@@ -6,13 +6,14 @@ ENDIF()
 
 
 # The source files to compile
-SET(SRC main.cpp)
+SET(SRC main.cpp Observer.cpp Observer.h include/json.hpp)
 
 include_directories(Game_representation)
 include_directories(Game_logic)
 
 add_subdirectory(Game_representation)
 add_subdirectory(Game_logic)
+
 
 # The program we're compiling with the sources set above
 ADD_EXECUTABLE(meat_boy ${SRC})

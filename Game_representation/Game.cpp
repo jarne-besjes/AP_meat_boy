@@ -4,18 +4,25 @@
 
 #include "Game.h"
 
+// Also change this in Player.cpp (these classes should be in seperate libraries, so we cant include this file)
+// TODO: maybe make a VALUES.cpp file that contains all the values
 static int WINDOW_WIDTH = 800;
-static int WINDOW_HEIGHT = 600;
+static int WINDOW_HEIGHT = 1000;
 
 Game::Game() : menu(Main_menu(*this)) {
 
     window = std::make_unique<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Meat boy!");
 
     main_font.loadFromFile("Game_representation/assets/Debrosee.ttf");
+
 }
 
 void Game::loop() {
-    bool left, right, down, up = false;
+    bool left = false;
+    bool right = false;
+    bool up = false;
+    bool down = false;
+
         while (window->isOpen()) {
             sf::Event event;
             while (window->pollEvent(event)) {
@@ -50,9 +57,11 @@ void Game::loop() {
                 window = menu.display(std::move(window));
                 menu.update();
             } else {
-                world.get_player().key_pressed(left, right, down, up);
-                world.get_player().update();
-                display_level();
+/*
+                if (left || right || down || up)
+                    world.get_player().key_pressed(left, right, down, up);
+*/
+                world.get_player().update(left, right, down, up);
             }
             window->display();
         }
@@ -60,17 +69,17 @@ void Game::loop() {
 
 void Game::display_level() {
         sf::Texture dirt_texture;
+        sf::Texture meat_boy_texture;
         dirt_texture.loadFromFile("Game_representation/assets/textures/tex_dirt.jpg");
+        meat_boy_texture.loadFromFile("Game_representation/assets/textures/meatboy.png");
 
         sf::Sprite dirt_sprite(dirt_texture);
+        sf::Sprite meat_boy_sprite(meat_boy_texture);
         dirt_sprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
         Position player_position = world.get_player().get_position();
-        dirt_sprite.setPosition(player_position.x, player_position.y);
+        meat_boy_sprite.setPosition(player_position.x, player_position.y);
 
-        std::cout << "Player position: " << player_position.x << ", " << player_position.y << std::endl;
-
-        window->draw(dirt_sprite);
-
+        window->draw(meat_boy_sprite);
 }
 
 Game::~Game() {
@@ -84,4 +93,12 @@ void Game::play_button_pressed() {
     show_menu = false;
     current_level = "level1";
     world.load_level("level1.json");
+}
+
+void Game::update() {
+    display_level();
+}
+
+void Game::add_game_to_player_observer() {
+    world.get_player().register_observer(shared_from_this());
 }
