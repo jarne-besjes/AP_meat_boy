@@ -5,7 +5,7 @@
 #ifndef PLOTTER_GAME_H
 #define PLOTTER_GAME_H
 #include "SFML/Graphics.hpp"
-#include "Main_menu.h"
+#include "View_factory.h"
 #include <memory>
 #include "../Game_logic/World.h"
 #include "../Game_logic/Player.h"
@@ -13,19 +13,18 @@
 
 class Game : public IObserver, public std::enable_shared_from_this<Game> {
 
+    View_factory view_factory;
+
     World world;
 
     bool show_menu = true;
 
     sf::Font main_font;
 
-    //sf::RenderWindow *window;
-
     std::unique_ptr<sf::RenderWindow> window;
 
     std::string current_level;
 
-    Main_menu menu;
 public:
 
     void add_game_to_player_observer();
@@ -38,7 +37,7 @@ public:
 
     void display_level();
 
-    void display_menu();
+    World &get_world();
 
     void loop();
 

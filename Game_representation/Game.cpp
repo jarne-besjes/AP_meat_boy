@@ -9,7 +9,7 @@
 static int WINDOW_WIDTH = 800;
 static int WINDOW_HEIGHT = 1000;
 
-Game::Game() : menu(Main_menu(*this)) {
+Game::Game() : view_factory(*this){
 
     window = std::make_unique<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Meat boy!");
 
@@ -52,15 +52,8 @@ void Game::loop() {
 
             window->clear();
             if (show_menu) {
-                window->clear();
-                menu.draw();
-                window = menu.display(std::move(window));
-                menu.update();
+                window = view_factory.draw_menu(std::move(window));
             } else {
-/*
-                if (left || right || down || up)
-                    world.get_player().key_pressed(left, right, down, up);
-*/
                 world.get_player().update(left, right, down, up);
             }
             window->display();
@@ -68,18 +61,7 @@ void Game::loop() {
 }
 
 void Game::display_level() {
-        sf::Texture dirt_texture;
-        sf::Texture meat_boy_texture;
-        dirt_texture.loadFromFile("Game_representation/assets/textures/tex_dirt.jpg");
-        meat_boy_texture.loadFromFile("Game_representation/assets/textures/meatboy.png");
-
-        sf::Sprite dirt_sprite(dirt_texture);
-        sf::Sprite meat_boy_sprite(meat_boy_texture);
-        dirt_sprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
-        Position player_position = world.get_player().get_position();
-        meat_boy_sprite.setPosition(player_position.x, player_position.y);
-
-        window->draw(meat_boy_sprite);
+    window = view_factory.draw_level(std::move(window));
 }
 
 Game::~Game() {
@@ -101,4 +83,8 @@ void Game::update() {
 
 void Game::add_game_to_player_observer() {
     world.get_player().register_observer(shared_from_this());
+}
+
+World &Game::get_world() {
+    return world;
 }
