@@ -2,6 +2,7 @@
 #include "Game_representation/Game.h"
 #include <memory>
 
+#include "Stopwatch.h"
 int main()
 {
     std::shared_ptr<Game> game = std::make_shared<Game>();
