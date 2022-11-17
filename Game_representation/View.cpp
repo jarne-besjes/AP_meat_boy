@@ -2,7 +2,7 @@
 // Created by jarne on 11/16/22.
 //
 
-#include "View_factory.h"
+#include "View.h"
 #include "Game.h"
 
 // Also change this in Player.cpp (these classes should be in seperate libraries, so we cant include this file)
@@ -10,18 +10,18 @@
 static int WINDOW_WIDTH = 800;
 static int WINDOW_HEIGHT = 1000;
 
-std::unique_ptr<sf::RenderWindow> View_factory::draw_menu(std::unique_ptr<sf::RenderWindow> window) {
+std::unique_ptr<sf::RenderWindow> View::draw_menu(std::unique_ptr<sf::RenderWindow> window, bool &has_to_close) {
     menu.draw();
     window = menu.display(std::move(window));
-    menu.update();
+    has_to_close = menu.update();
 
     return window;
 }
 
-View_factory::View_factory(Game &game): game(game), menu(game) {
+View::View(Game &game): game(game), menu(game) {
 }
 
-std::unique_ptr<sf::RenderWindow> View_factory::draw_level(std::unique_ptr<sf::RenderWindow> window) {
+std::unique_ptr<sf::RenderWindow> View::draw_level(std::unique_ptr<sf::RenderWindow> window) {
 
     sf::Texture dirt_texture;
     sf::Texture meat_boy_texture;

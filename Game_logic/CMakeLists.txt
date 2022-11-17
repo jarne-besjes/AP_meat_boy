@@ -5,7 +5,7 @@ IF (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 ENDIF()
 
 # The source files to compile
-SET(SRC World.cpp Player.cpp Player.h Blocks/Block.cpp Blocks/Block.h Entity.cpp Entity.h)
+SET(SRC World.cpp Player.cpp Player.h Blocks/Entity.cpp Blocks/Entity.h Blocks/Entity_factory.h Blocks/Entity_factory.cpp)
 
 # The program we're compiling with the sources set above
 ADD_LIBRARY(Meat_boy_game_logic ${SRC})

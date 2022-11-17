@@ -11,9 +11,11 @@ Stopwatch &Stopwatch::getInstance() {
 }
 
 void Stopwatch::start() {
-    std::cout << "Stopwatch: " << this << "started" << std::endl;
+    current = std::chrono::system_clock::now();
 }
 
 void Stopwatch::stop() {
-    std::cout << "Stopwatch: " << this << "stopped" << std::endl;
+    previous = current;
+    current = std::chrono::system_clock::now();
+    diff = std::chrono::duration_cast<std::chrono::milliseconds>(current - previous).count();
 }

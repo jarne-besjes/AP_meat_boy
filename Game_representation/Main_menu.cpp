@@ -41,7 +41,7 @@ void Main_menu::draw() {
     }
 }
 
-void Main_menu::update() {
+bool Main_menu::update() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
         if (play_button_selected) {
             play_button_selected = false;
@@ -64,9 +64,11 @@ void Main_menu::update() {
         if (play_button_selected) {
             game.play_button_pressed();
         } else if (quit_button_selected) {
-            game.close_window();
+            return true;
         }
     }
+
+    return false;
 }
 
 std::unique_ptr<sf::RenderWindow> Main_menu::display(std::unique_ptr<sf::RenderWindow> window) {

@@ -26,7 +26,7 @@ class Main_menu {
 public:
     explicit Main_menu(Game &game);
 
-    void update();
+    bool update(); // if bool == true, the game has to close
 
     void draw();
 

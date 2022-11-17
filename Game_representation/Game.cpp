@@ -8,8 +8,9 @@
 // TODO: maybe make a VALUES.cpp file that contains all the values
 static int WINDOW_WIDTH = 800;
 static int WINDOW_HEIGHT = 1000;
+static int FRAME_TIME = 16;
 
-Game::Game() : view_factory(*this){
+Game::Game() : view(*this){
 
     window = std::make_unique<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Meat boy!");
 
@@ -23,52 +24,52 @@ void Game::loop() {
     bool up = false;
     bool down = false;
 
-        while (window->isOpen()) {
-            sf::Event event;
-            while (window->pollEvent(event)) {
-                if (event.type == sf::Event::Closed)
-                    window->close();
-                if (event.type == sf::Event::KeyPressed) {
-                    if (event.key.code == sf::Keyboard::Right)
-                        right = true;
-                    if (event.key.code == sf::Keyboard::Left)
-                        left = true;
-                    if (event.key.code == sf::Keyboard::Up)
-                        up = true;
-                    if (event.key.code == sf::Keyboard::Down)
-                        down = true;
-                }
-                if (event.type == sf::Event::KeyReleased) {
-                    if (event.key.code == sf::Keyboard::Right)
-                        right = false;
-                    if (event.key.code == sf::Keyboard::Left)
-                        left = false;
-                    if (event.key.code == sf::Keyboard::Up)
-                        up = false;
-                    if (event.key.code == sf::Keyboard::Down)
-                        down = false;
-                }
+    while (window->isOpen()) {
+        sf::Event event;
+        while (window->pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window->close();
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Right)
+                    right = true;
+                if (event.key.code == sf::Keyboard::Left)
+                    left = true;
+                if (event.key.code == sf::Keyboard::Up)
+                    up = true;
+                if (event.key.code == sf::Keyboard::Down)
+                    down = true;
             }
-
-            window->clear();
-            if (show_menu) {
-                window = view_factory.draw_menu(std::move(window));
-            } else {
-                world.get_player().update(left, right, down, up);
+            if (event.type == sf::Event::KeyReleased) {
+                if (event.key.code == sf::Keyboard::Right)
+                    right = false;
+                if (event.key.code == sf::Keyboard::Left)
+                    left = false;
+                if (event.key.code == sf::Keyboard::Up)
+                    up = false;
+                if (event.key.code == sf::Keyboard::Down)
+                    down = false;
             }
-            window->display();
         }
+
+        window->clear();
+        if (show_menu) {
+            bool close_window = false;
+            window = view.draw_menu(std::move(window), close_window);
+            if (close_window) {
+                window->close();
+            }
+        } else {
+            world.get_player().update(left, right, down, up);
+        }
+        window->display();
+    }
 }
 
 void Game::display_level() {
-    window = view_factory.draw_level(std::move(window));
+    window = view.draw_level(std::move(window));
 }
 
 Game::~Game() {
-}
-
-void Game::close_window() {
-    window->close();
 }
 
 void Game::play_button_pressed() {
@@ -88,3 +89,4 @@ void Game::add_game_to_player_observer() {
 World &Game::get_world() {
     return world;
 }
+

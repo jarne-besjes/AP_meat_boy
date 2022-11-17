@@ -5,15 +5,18 @@
 #ifndef PLOTTER_GAME_H
 #define PLOTTER_GAME_H
 #include "SFML/Graphics.hpp"
-#include "View_factory.h"
+#include "View.h"
 #include <memory>
 #include "../Game_logic/World.h"
 #include "../Game_logic/Player.h"
+#include "../Stopwatch.h"
 
 
 class Game : public IObserver, public std::enable_shared_from_this<Game> {
 
-    View_factory view_factory;
+ //   Stopwatch &stopwatch = Stopwatch::getInstance();
+
+    View view;
 
     World world;
 
@@ -32,8 +35,6 @@ public:
     void update() override;
 
     Game();
-
-    void close_window();
 
     void display_level();
 
