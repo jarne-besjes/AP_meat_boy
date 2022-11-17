@@ -6,8 +6,8 @@
 
 // Also change this in Player.cpp (these classes should be in seperate libraries, so we cant include this file)
 // TODO: maybe make a VALUES.cpp file that contains all the values
-static int WINDOW_WIDTH = 800;
-static int WINDOW_HEIGHT = 1000;
+static int WINDOW_WIDTH = 600;
+static int WINDOW_HEIGHT = 600;
 static int FRAME_TIME = 16;
 
 Game::Game() : view(*this){
@@ -60,6 +60,7 @@ void Game::loop() {
             }
         } else {
             world.get_player().update(left, right, down, up);
+            window = view.draw_entities(std::move(window), world.get_entities());
         }
         window->display();
     }

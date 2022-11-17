@@ -12,8 +12,8 @@ static double PLAYER_DECELERATION = 0.05;
 static double GRAVITY = 0.001;
 static double JUMP_ACCEL = 1;
 
-static int WINDOW_WIDTH = 800;
-static int WINDOW_HEIGHT = 1000;
+static int WINDOW_WIDTH = 600;
+static int WINDOW_HEIGHT = 600;
 
 static int SPRITEWIDTH = 50;
 static int SPRITEHEIGHT = 50;

@@ -10,6 +10,7 @@
 
 class Game;
 
+class Entity;
 
 class View {
 
@@ -24,6 +25,8 @@ public:
     std::unique_ptr<sf::RenderWindow> draw_menu(std::unique_ptr<sf::RenderWindow> window, bool &has_to_close);
 
     std::unique_ptr<sf::RenderWindow> draw_level(std::unique_ptr<sf::RenderWindow> window);
+
+    std::unique_ptr<sf::RenderWindow> draw_entities(std::unique_ptr<sf::RenderWindow> window, std::vector<std::shared_ptr<Entity>> &entities);
 
 };
 

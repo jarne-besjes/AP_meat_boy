@@ -27,16 +27,25 @@ protected:
 public:
     Entity(int x, int y, int width, int height);
 
+    virtual Block_type get_type() const = 0;
+
+    virtual int get_x() const;
+    virtual int get_y() const;
 };
 
 class GrassBlock : public Entity {
 public:
     GrassBlock(int x, int y, int width, int height);
+
+    Block_type get_type() const override;
+
 };
 
 class DirtBlock : public Entity {
 public:
     DirtBlock(int x, int y, int width, int height);
+
+    Block_type get_type() const override;
 };
 
 #endif //MEAT_BOY_ENTITY_H

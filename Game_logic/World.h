@@ -7,13 +7,19 @@
 #include <iostream>
 #include "Player.h"
 
+class Entity;
+
 class World {
 
     Player player;
 
+    std::vector<std::shared_ptr<Entity>> entities;
+
 public:
     void load_level(std::string level_name);
     Player &get_player();
+
+    std::vector<std::shared_ptr<Entity>> &get_entities();
 };
 
 
