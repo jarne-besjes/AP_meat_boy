@@ -12,15 +12,21 @@ class Entity_factory {
 public:
     virtual std::unique_ptr<Entity> create_entity(int x, int y, int width, int height) = 0;
 
+    virtual ~Entity_factory();
 };
 
 class Grass_factory : public Entity_factory {
 public:
     std::unique_ptr<Entity> create_entity(int x, int y, int width, int height) override;
+
+    ~Grass_factory() override = default;
 };
 
 class Dirt_factory : public Entity_factory {
+public:
     std::unique_ptr<Entity> create_entity(int x, int y, int width, int height) override;
+
+    ~Dirt_factory() override = default;
 };
 
 

@@ -12,3 +12,5 @@ std::unique_ptr<Entity> Grass_factory::create_entity(int x, int y, int width, in
 std::unique_ptr<Entity> Dirt_factory::create_entity(int x, int y, int width, int height) {
     return std::make_unique<DirtBlock>(x, y, width, height);
 }
+
+Entity_factory::~Entity_factory() {}

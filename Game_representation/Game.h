@@ -10,6 +10,7 @@
 #include "../Game_logic/World.h"
 #include "../Game_logic/Player.h"
 #include "../Stopwatch.h"
+#include "State.h"
 
 
 class Game : public IObserver, public std::enable_shared_from_this<Game> {
@@ -20,7 +21,7 @@ class Game : public IObserver, public std::enable_shared_from_this<Game> {
 
     World world;
 
-    bool show_menu = true;
+    Game_state game_state = Game_state::MENU;
 
     sf::Font main_font;
 

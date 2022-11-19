@@ -5,6 +5,7 @@
 #include "Player.h"
 #include <math.h>
 #include <iostream>
+#include "Hitbox.h"
 
 static double PLAYER_MAX_SPEED = 0.5;
 static double PLAYER_ACCELERATION = 0.0005;
@@ -19,7 +20,7 @@ static int SPRITEWIDTH = 50;
 static int SPRITEHEIGHT = 50;
 
 
-void Player::update(bool left, bool right, bool down, bool up) {
+void Player::update(bool left, bool right, bool down, bool up, std::vector<std::shared_ptr<Entity>> &entities) {
 
     position_x += velocity_x;
     position_y += velocity_y;
@@ -58,12 +59,26 @@ void Player::update(bool left, bool right, bool down, bool up) {
     } else if (position_x > WINDOW_WIDTH - SPRITEWIDTH) {
         position_x = WINDOW_WIDTH - SPRITEWIDTH;
     }
-
     if (position_y > WINDOW_HEIGHT - SPRITEHEIGHT) {
         position_y = WINDOW_HEIGHT - SPRITEHEIGHT;
         velocity_y = 0;
     } else if (position_y < 0) {
         position_y = 0;
+    }
+
+
+    // check hitboxes
+    for(auto &entity : entities) {
+        if (get_hitbox().collides_left_side(entity->get_hitbox())) {
+            if (velocity_x > 0) {
+                position_x = entity->get_x() - entity->get_width();
+            } else if (velocity_x < 0) {
+                position_x = entity->get_x() + entity->get_width();
+            }
+            velocity_x = 0;
+
+            break;
+        }
     }
 
 
@@ -110,4 +125,12 @@ Position Player::get_position() {
 
 Hitbox Player::get_hitbox() {
     return Hitbox{position_x, position_y, SPRITEWIDTH, SPRITEHEIGHT};
+}
+
+Player::Player() {
+    position_x = 100;
+    position_y = 100;
+    velocity_x = 0;
+    velocity_y = 0;
+
 }

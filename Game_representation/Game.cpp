@@ -52,14 +52,14 @@ void Game::loop() {
         }
 
         window->clear();
-        if (show_menu) {
+        if (game_state == Game_state::MENU) {
             bool close_window = false;
             window = view.draw_menu(std::move(window), close_window);
             if (close_window) {
                 window->close();
             }
         } else {
-            world.get_player().update(left, right, down, up);
+            world.get_player().update(left, right, down, up, world.get_entities());
             window = view.draw_entities(std::move(window), world.get_entities());
         }
         window->display();
@@ -74,7 +74,7 @@ Game::~Game() {
 }
 
 void Game::play_button_pressed() {
-    show_menu = false;
+    game_state = Game_state::GAME;
     current_level = "level1";
     world.load_level("level1.json");
 }
