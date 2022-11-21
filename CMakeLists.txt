@@ -6,7 +6,7 @@ ENDIF()
 
 
 # The source files to compile
-SET(SRC main.cpp Observer.cpp Observer.h include/json.hpp Stopwatch.cpp Stopwatch.h)
+SET(SRC main.cpp Observer.cpp Observer.h include/json.hpp Stopwatch.cpp Stopwatch.h Camera.cpp Camera.h)
 
 include_directories(Game_representation)
 include_directories(Game_logic)

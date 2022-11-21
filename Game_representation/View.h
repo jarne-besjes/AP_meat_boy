@@ -18,6 +18,7 @@ class View {
 
     Main_menu menu;
 
+    sf::View view;
 
 public:
     explicit View(Game &game);

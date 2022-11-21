@@ -20,7 +20,7 @@ class Player : public IObservable{
     double position_x, position_y;
     double velocity_x, velocity_y;
 
-    bool jumping = false;
+    bool on_ground = false;
 
 public:
     Player();

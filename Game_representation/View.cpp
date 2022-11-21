@@ -20,9 +20,11 @@ std::unique_ptr<sf::RenderWindow> View::draw_menu(std::unique_ptr<sf::RenderWind
 }
 
 View::View(Game &game): game(game), menu(game) {
+    view = sf::View(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
 }
 
 std::unique_ptr<sf::RenderWindow> View::draw_level(std::unique_ptr<sf::RenderWindow> window) {
+    window->setView(view);
 
     sf::Texture dirt_texture;
     sf::Texture meat_boy_texture;

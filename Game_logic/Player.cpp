@@ -22,8 +22,28 @@ static int SPRITEHEIGHT = 50;
 
 void Player::update(bool left, bool right, bool down, bool up, std::vector<std::shared_ptr<Entity>> &entities) {
 
-    position_x += velocity_x;
-    position_y += velocity_y;
+    // check hitboxes
+    for(auto &entity : entities) {
+        if (true) {
+            if (entity->get_hitbox().collides_left_side(entity->get_hitbox())) {
+                position_x = entity->get_hitbox().left_side - SPRITEWIDTH;
+                velocity_x = 0;
+            }
+            if (entity->get_hitbox().collides_right_side(entity->get_hitbox())) {
+                position_x = entity->get_hitbox().left_side + SPRITEWIDTH;
+                velocity_x = 0;
+            }
+            if (entity->get_hitbox().collides_top_side(entity->get_hitbox())) {
+                position_y = entity->get_hitbox().top_side - SPRITEHEIGHT;
+                velocity_y = 0;
+            }
+            if (entity->get_hitbox().collides_bottom_side(entity->get_hitbox())) {
+                position_y = entity->get_hitbox().top_side + SPRITEHEIGHT;
+                on_ground = true;
+            }
+        }
+    }
+
 
     if (right) {
         velocity_x += PLAYER_ACCELERATION;
@@ -43,7 +63,12 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
         }
     }
 
-    if (up && position_y > WINDOW_HEIGHT - SPRITEHEIGHT - 0.1) {
+
+    position_x += velocity_x;
+    position_y += velocity_y;
+
+    if (up && on_ground) {
+        on_ground = false;
         velocity_y -= JUMP_ACCEL;
     } else {
         velocity_y += GRAVITY;
@@ -64,21 +89,6 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
         velocity_y = 0;
     } else if (position_y < 0) {
         position_y = 0;
-    }
-
-
-    // check hitboxes
-    for(auto &entity : entities) {
-        if (get_hitbox().collides_left_side(entity->get_hitbox())) {
-            if (velocity_x > 0) {
-                position_x = entity->get_x() - entity->get_width();
-            } else if (velocity_x < 0) {
-                position_x = entity->get_x() + entity->get_width();
-            }
-            velocity_x = 0;
-
-            break;
-        }
     }
 
 
