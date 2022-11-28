@@ -3,6 +3,9 @@
 //
 
 #include "Game.h"
+#include <filesystem>
+#include <iostream>
+#include <fstream>
 
 // Also change this in Player.cpp (these classes should be in seperate libraries, so we cant include this file)
 // TODO: maybe make a VALUES.cpp file that contains all the values
@@ -75,6 +78,16 @@ Game::~Game() {
 
 void Game::play_button_pressed() {
     game_state = Game_state::GAME;
+    std::string path = "assets/levels";
+    std::vector<std::string> levels;
+    for (const auto &entry : std::filesystem::directory_iterator(path)) {
+        if (entry.path().extension() == ".json") {
+            levels.push_back(entry.path().string());
+        }
+    }
+    for (auto &level : levels) {
+        std::cout << level << std::endl;
+    }
     current_level = "level1";
     world.load_level("level1.json");
 }
