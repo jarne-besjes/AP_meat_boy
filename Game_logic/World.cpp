@@ -33,6 +33,8 @@ void World::load_level(std::string level_name) {
                 entities.push_back(create_entity(grass_factory, x * 50, y * 50, 50, 50));
             } else if (level[y][x] == 'd') {
                 entities.push_back(create_entity(dirt_factory, x * 50, y * 50, 50, 50));
+            } else if(level[y][x] == 'p') {
+                player.set_position(x * 50, y * 50);
             }
         }
     }
