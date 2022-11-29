@@ -6,44 +6,21 @@
 #include <math.h>
 #include <iostream>
 #include "Hitbox.h"
-
-static double PLAYER_MAX_SPEED = 0.5;
-static double PLAYER_ACCELERATION = 0.0005;
-static double PLAYER_DECELERATION = 0.05;
-static double GRAVITY = 0.001;
-static double JUMP_ACCEL = 1;
-
-static int WINDOW_WIDTH = 600;
-static int WINDOW_HEIGHT = 600;
-
-static int SPRITEWIDTH = 50;
-static int SPRITEHEIGHT = 50;
+#include "../Values.cpp"
 
 
 void Player::update(bool left, bool right, bool down, bool up, std::vector<std::shared_ptr<Entity>> &entities) {
 
-    // check hitboxes
-    for(auto &entity : entities) {
-        if (true) {
-            if (entity->get_hitbox().collides_left_side(entity->get_hitbox())) {
-                position_x = entity->get_hitbox().left_side - SPRITEWIDTH;
-                velocity_x = 0;
-            }
-            if (entity->get_hitbox().collides_right_side(entity->get_hitbox())) {
-                position_x = entity->get_hitbox().left_side + SPRITEWIDTH;
-                velocity_x = 0;
-            }
-            if (entity->get_hitbox().collides_top_side(entity->get_hitbox())) {
-                position_y = entity->get_hitbox().top_side - SPRITEHEIGHT;
-                velocity_y = 0;
-            }
-            if (entity->get_hitbox().collides_bottom_side(entity->get_hitbox())) {
-                position_y = entity->get_hitbox().top_side + SPRITEHEIGHT;
-                on_ground = true;
-            }
-        }
+    if (up && on_ground) {
+        on_ground = false;
+        velocity_y -= JUMP_ACCEL;
+    } else {
+        velocity_y += GRAVITY;
     }
 
+    if (velocity_y > PLAYER_MAX_SPEED) {
+        velocity_y = PLAYER_MAX_SPEED;
+    }
 
     if (right) {
         velocity_x += PLAYER_ACCELERATION;
@@ -55,7 +32,7 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
             if (velocity_x < 0) {
                 velocity_x = 0;
             }
-        } else if (velocity_x < 0) {
+        } else if (velocity_x < 0 && !on_ground) {
             velocity_x += PLAYER_DECELERATION;
             if (velocity_x > 0) {
                 velocity_x = 0;
@@ -66,18 +43,6 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
 
     position_x += velocity_x;
     position_y += velocity_y;
-
-    if (up && on_ground) {
-        on_ground = false;
-        velocity_y -= JUMP_ACCEL;
-    } else {
-        velocity_y += GRAVITY;
-    }
-
-
-    if (velocity_y > PLAYER_MAX_SPEED) {
-        velocity_y = PLAYER_MAX_SPEED;
-    }
 
     if (position_x < 0) {
         position_x = 0;
@@ -90,6 +55,59 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
     } else if (position_y < 0) {
         position_y = 0;
     }
+
+
+    // check hitboxes
+    for(auto &entity : entities) {
+        if (this->get_hitbox().collides(entity->get_hitbox())) {
+            double shortest_x;
+            double shortest_y;
+            shortest_x = std::min(std::abs(this->get_hitbox().get_right() - entity->get_hitbox().get_left()),
+                                  std::abs(this->get_hitbox().get_left() - entity->get_hitbox().get_right()));
+            shortest_y = std::min(std::abs(this->get_hitbox().get_top() - entity->get_hitbox().get_bottom()),
+                                  std::abs(this->get_hitbox().get_bottom() - entity->get_hitbox().get_top()));
+
+             if (shortest_x <= shortest_y) {
+                 //horizontal
+                 if (velocity_x > 0) {
+                     position_x = entity->get_x() - SPRITEWIDTH;
+                 } else if (velocity_x < 0) {
+                     position_x = entity->get_x() + SPRITEWIDTH;
+                 }
+                 velocity_x = 0;
+             } else {
+                 // vertical
+                 if (velocity_y > 0) {
+                     position_y = entity->get_y() - SPRITEHEIGHT;
+                     on_ground = true;
+                 } else if (velocity_y < 0) {
+                     position_y = entity->get_y() + SPRITEHEIGHT;
+                 }
+                 velocity_y = 0;
+             }
+        }
+
+
+
+        /*if (this->get_hitbox().collides_left_side(entity->get_hitbox())) {
+            position_x = entity->get_hitbox().left_side - SPRITEWIDTH;
+            velocity_x = 0;
+        }
+        if (this->get_hitbox().collides_right_side(entity->get_hitbox())) {
+            position_x = entity->get_hitbox().left_side + SPRITEWIDTH;
+            velocity_x = 0;
+        }
+        if (this->get_hitbox().collides_top_side(entity->get_hitbox())) {
+            position_y = entity->get_hitbox().top_side - SPRITEHEIGHT;
+            velocity_y = 0;
+            on_ground = true;
+        }
+        if (this->get_hitbox().collides_bottom_side(entity->get_hitbox())) {
+            position_y = entity->get_hitbox().top_side + SPRITEHEIGHT;
+            velocity_y = 0;
+        }*/
+    }
+
 
 
     notify_observers();

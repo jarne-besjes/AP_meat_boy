@@ -5,11 +5,8 @@
 #include "View.h"
 #include "Game.h"
 #include "../Game_logic/Blocks/Entity.h"
+#include "../Values.cpp"
 
-// Also change this in Player.cpp (these classes should be in seperate libraries, so we cant include this file)
-// TODO: maybe make a VALUES.cpp file that contains all the values
-static int WINDOW_WIDTH = 600;
-static int WINDOW_HEIGHT = 600;
 
 std::unique_ptr<sf::RenderWindow> View::draw_menu(std::unique_ptr<sf::RenderWindow> window, bool &has_to_close) {
     menu.draw();
@@ -21,6 +18,7 @@ std::unique_ptr<sf::RenderWindow> View::draw_menu(std::unique_ptr<sf::RenderWind
 
 View::View(Game &game): game(game), menu(game) {
     view = sf::View(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
+    main_font.loadFromFile("Game_representation/assets/Freshman-POdx.ttf");
 }
 
 std::unique_ptr<sf::RenderWindow> View::draw_level(std::unique_ptr<sf::RenderWindow> window) {
@@ -69,6 +67,21 @@ View::draw_entities(std::unique_ptr<sf::RenderWindow> window, std::vector<std::s
         }
     }
 
+
+    return window;
+}
+
+std::unique_ptr<sf::RenderWindow>
+View::draw_level_choice(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels, std::string &level) {
+    for (int i = 0; i < levels.size(); i++) {
+        sf::Text text;
+        text.setFont(main_font);
+        text.setString(levels[i]);
+        text.setCharacterSize(24);
+        text.setFillColor(sf::Color::White);
+        text.setPosition(100, 100 + i * 50);
+        window->draw(text);
+    }
 
     return window;
 }

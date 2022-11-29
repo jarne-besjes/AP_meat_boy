@@ -22,6 +22,11 @@ public:
 
     bool collides(const Hitbox &other) const;
 
+    int get_top();
+    int get_bottom();
+    int get_left();
+    int get_right();
+
     // functions to check collisions: check if THIS OBJECT COLLIDES with the ... side of the other object
     bool collides_left_side(const Hitbox &other) const;
     bool collides_right_side(const Hitbox &other) const;

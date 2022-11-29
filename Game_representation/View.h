@@ -20,6 +20,8 @@ class View {
 
     sf::View view;
 
+    sf::Font main_font;
+
 public:
     explicit View(Game &game);
 
@@ -29,6 +31,8 @@ public:
 
     std::unique_ptr<sf::RenderWindow> draw_entities(std::unique_ptr<sf::RenderWindow> window, std::vector<std::shared_ptr<Entity>> &entities);
 
+    std::unique_ptr<sf::RenderWindow>
+    draw_level_choice(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels, std::string &level);
 };
 
 
