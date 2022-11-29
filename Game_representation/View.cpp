@@ -73,15 +73,8 @@ View::draw_entities(std::unique_ptr<sf::RenderWindow> window, std::vector<std::s
 
 std::unique_ptr<sf::RenderWindow>
 View::draw_level_choice(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels, std::string &level) {
-    for (int i = 0; i < levels.size(); i++) {
-        sf::Text text;
-        text.setFont(main_font);
-        text.setString(levels[i]);
-        text.setCharacterSize(24);
-        text.setFillColor(sf::Color::White);
-        text.setPosition(100, 100 + i * 50);
-        window->draw(text);
-    }
+    window = selection.draw(std::move(window), levels);
+    window = selection.update(std::move(window), levels, level);
 
     return window;
 }

@@ -14,13 +14,13 @@ std::shared_ptr<Entity> create_entity(std::shared_ptr<Entity_factory> &factory, 
     return factory->create_entity(x, y, width, height);
 }
 
-void World::load_level(std::string level_name) {
+void World::load_level(const std::string& level_name) {
     // factories
     std::shared_ptr<Entity_factory> dirt_factory = std::make_shared<Dirt_factory>();
     std::shared_ptr<Entity_factory> grass_factory = std::make_shared<Grass_factory>();
 
     json j;
-    std::string level_loc = "assets/levels/" + level_name;
+    const std::string &level_loc = level_name;
     std::ifstream i(level_loc);
     i >> j;
 

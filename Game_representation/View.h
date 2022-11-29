@@ -7,6 +7,7 @@
 #include <memory>
 #include "SFML/Graphics.hpp"
 #include "Main_menu.h"
+#include "Level_selection.h"
 
 class Game;
 
@@ -17,6 +18,8 @@ class View {
     Game &game;
 
     Main_menu menu;
+
+    Level_selection selection;
 
     sf::View view;
 

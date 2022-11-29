@@ -5,6 +5,8 @@
 #include "Game.h"
 #include <filesystem>
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include <fstream>
 
 // Also change this in Player.cpp (these classes should be in seperate libraries, so we cant include this file)
@@ -78,7 +80,11 @@ void Game::loop() {
                 }
             }
             window = view.draw_level_choice(std::move(window), levels, level);
-
+            if (!level.empty()) {
+                std::cout << level << std::endl;
+                world.load_level(level);
+                state_manager.set_state(Game_state::GAME);
+            }
         }
         window->display();
     }
@@ -92,10 +98,8 @@ Game::~Game() {
 }
 
 void Game::play_button_pressed() {
-    std::cout << "play button pressed" << std::endl;
-    state_manager.set_state(Game_state::GAME);
-    current_level = "level1";
-    world.load_level("level1.json");
+    state_manager.set_state(Game_state::LEVEL_CHOICE);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
 void Game::update() {
