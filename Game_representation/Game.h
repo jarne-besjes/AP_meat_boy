@@ -19,10 +19,9 @@ class Game : public IObserver, public std::enable_shared_from_this<Game> {
 
     View view;
 
+    State_manager state_manager;
+
     World world;
-
-    Game_state game_state = Game_state::MENU;
-
     sf::Font main_font;
 
     std::unique_ptr<sf::RenderWindow> window;

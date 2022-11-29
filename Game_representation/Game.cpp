@@ -27,7 +27,11 @@ void Game::loop() {
     bool up = false;
     bool down = false;
 
+    std::cout << &state_manager << std::endl;
+
     while (window->isOpen()) {
+        Game_state game_state = state_manager.get_state();
+
         sf::Event event;
         while (window->pollEvent(event)) {
             if (event.type == sf::Event::Closed)
@@ -61,9 +65,20 @@ void Game::loop() {
             if (close_window) {
                 window->close();
             }
-        } else {
+        } else if (game_state == Game_state::GAME) {
             world.get_player().update(left, right, down, up, world.get_entities());
             window = view.draw_entities(std::move(window), world.get_entities());
+        } else if (game_state == Game_state::LEVEL_CHOICE) {
+            std::string level;
+            std::string path = "assets/levels";
+            std::vector<std::string> levels;
+            for (const auto &entry : std::filesystem::directory_iterator(path)) {
+                if (entry.path().extension() == ".json") {
+                    levels.push_back(entry.path().string());
+                }
+            }
+            window = view.draw_level_choice(std::move(window), levels, level);
+
         }
         window->display();
     }
@@ -77,17 +92,8 @@ Game::~Game() {
 }
 
 void Game::play_button_pressed() {
-    game_state = Game_state::GAME;
-    std::string path = "assets/levels";
-    std::vector<std::string> levels;
-    for (const auto &entry : std::filesystem::directory_iterator(path)) {
-        if (entry.path().extension() == ".json") {
-            levels.push_back(entry.path().string());
-        }
-    }
-    for (auto &level : levels) {
-        std::cout << level << std::endl;
-    }
+    std::cout << "play button pressed" << std::endl;
+    state_manager.set_state(Game_state::GAME);
     current_level = "level1";
     world.load_level("level1.json");
 }
