@@ -162,3 +162,9 @@ Player::Player() {
     velocity_y = 0;
 
 }
+
+void Player::set_position(double x, double y) {
+    position_x = x;
+    position_y = y;
+
+}

@@ -74,18 +74,18 @@ bool Hitbox::collides_bottom_side(const Hitbox &other) const {
     return false;
 }
 
-int Hitbox::get_top() {
+int Hitbox::get_top() const {
     return top_side;
 }
 
-int Hitbox::get_bottom() {
+int Hitbox::get_bottom() const {
     return bottom_side;
 }
 
-int Hitbox::get_left() {
+int Hitbox::get_left() const {
     return left_side;
 }
 
-int Hitbox::get_right() {
+int Hitbox::get_right() const {
     return right_side;
 }

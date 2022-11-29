@@ -25,6 +25,8 @@ class Player : public IObservable{
 public:
     Player();
 
+    void set_position(double x, double y);
+
     void key_pressed(bool left, bool right, bool down, bool up);
 
     void update(bool left, bool right, bool down, bool up, std::vector<std::shared_ptr<Entity>> &entities);
