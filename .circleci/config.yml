@@ -11,4 +11,4 @@ jobs:
       - run: DEBIAN_FRONTEND=noninteractive TZ=Europe/Brussels apt install -y gcc g++ libsfml-dev cmake git
       - run: mkdir -p build
       - run: cd build && cmake ..
-      - run: make -j
+      - run: cd build && make -j
