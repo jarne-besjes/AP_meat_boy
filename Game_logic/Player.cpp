@@ -14,7 +14,7 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
     if (up && on_ground) {
         on_ground = false;
         velocity_y -= JUMP_ACCEL;
-    } else {
+    } else if (!on_ground){
         velocity_y += GRAVITY;
     }
 
@@ -58,8 +58,10 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
 
 
     // check hitboxes
+    bool collided = false;
     for(auto &entity : entities) {
         if (this->get_hitbox().collides(entity->get_hitbox())) {
+            collided = true;
             double shortest_x;
             double shortest_y;
             shortest_x = std::min(std::abs(this->get_hitbox().get_right() - entity->get_hitbox().get_left()),
@@ -86,6 +88,8 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
                  velocity_y = 0;
              }
         }
+
+        if (!collided) on_ground = false;
 
 
 
