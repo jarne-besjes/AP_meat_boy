@@ -22,6 +22,11 @@ int Entity::get_height() const {
     return height;
 }
 
+void Entity::set_position(int x, int y) {
+    this->x = x;
+    this->y = y;
+}
+
 
 GrassBlock::GrassBlock(int x, int y, int width, int height) : Entity(x, y, width, height) {
     block_type = Block_type::GRASS;

@@ -13,6 +13,7 @@
 enum class Block_type {
     GRASS,
     DIRT,
+    FINISH
 };
 
 class Entity {
@@ -29,6 +30,8 @@ public:
     virtual Block_type get_type() const = 0;
 
     virtual Hitbox get_hitbox() const = 0;
+
+    void set_position(int x, int y);
 
 
     int get_x() const;

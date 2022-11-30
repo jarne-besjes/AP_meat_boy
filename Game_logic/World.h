@@ -6,6 +6,7 @@
 #define MEAT_BOY_WORLD_H
 #include <iostream>
 #include "Player.h"
+#include "Blocks/Finish.h"
 
 class Entity;
 
@@ -13,9 +14,13 @@ class World {
 
     Player player;
 
+    Finish finish;
+
     std::vector<std::shared_ptr<Entity>> entities;
 
 public:
+    World();
+
     void load_level(const std::string& level_name);
     Player &get_player();
 
