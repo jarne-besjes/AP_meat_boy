@@ -30,6 +30,8 @@ class Game : public IObserver, public std::enable_shared_from_this<Game> {
 
     std::string current_level;
 
+    bool moving_camera;
+
 public:
 
     void add_game_to_player_observer();
@@ -45,6 +47,8 @@ public:
     void loop();
 
     void play_button_pressed();
+
+    Camera &get_camera();
 
     ~Game();
 };

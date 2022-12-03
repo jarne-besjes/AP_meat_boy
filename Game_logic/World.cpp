@@ -14,7 +14,7 @@ std::shared_ptr<Entity> create_entity(std::shared_ptr<Entity_factory> &factory, 
     return factory->create_entity(x, y, width, height);
 }
 
-int World::load_level(const std::string& level_name) {
+int World::load_level(const std::string& level_name, bool &moving_camera) {
     entities.clear();
     player.reset();
     // factories
@@ -27,7 +27,7 @@ int World::load_level(const std::string& level_name) {
     std::ifstream i(level_loc);
     i >> j;
 
-    bool moving_camera = j["moving_camera"];
+    moving_camera = j["moving_camera"];
     std::vector<std::string> level = j["level"];
 
     bool finish_set = false;

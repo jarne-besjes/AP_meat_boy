@@ -44,7 +44,7 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
     position_x += velocity_x;
     position_y += velocity_y;
 
-    if (position_x < 0) {
+/*    if (position_x < 0) {
         position_x = 0;
     } else if (position_x > WINDOW_WIDTH - SPRITEWIDTH) {
         position_x = WINDOW_WIDTH - SPRITEWIDTH;
@@ -54,7 +54,7 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
         velocity_y = 0;
     } else if (position_y < 0) {
         position_y = 0;
-    }
+    }*/
 
 
     // check hitboxes

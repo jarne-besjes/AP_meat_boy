@@ -16,8 +16,10 @@ class Camera {
 
     int width = WINDOW_WIDTH;
     int height = WINDOW_HEIGHT;
-
 public:
+
+    bool enabled = false;
+
     Camera();
 
     void set_level_size(int level_y_size);

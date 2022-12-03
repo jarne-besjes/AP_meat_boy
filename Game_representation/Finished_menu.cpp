@@ -3,8 +3,10 @@
 //
 
 #include "Finished_menu.h"
+#include "../Values.cpp"
 
 std::unique_ptr<sf::RenderWindow> Finished_menu::draw(std::unique_ptr<sf::RenderWindow> window) {
+    window->setView(view);
     sf::Text text;
     sf::Text menu_text;
     text.setFont(main_font);
@@ -33,5 +35,6 @@ bool Finished_menu::update() {
 }
 
 Finished_menu::Finished_menu() {
+    view.setCenter(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     main_font.loadFromFile("Game_representation/assets/Debrosee.ttf");
 }

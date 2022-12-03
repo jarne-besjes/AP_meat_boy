@@ -9,6 +9,9 @@
 
 
 std::unique_ptr<sf::RenderWindow> View::draw_menu(std::unique_ptr<sf::RenderWindow> window, bool &has_to_close) {
+    // we have to reset our view, because we might have changed it in the level
+    view.setCenter(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+    window->setView(view);
     menu.draw();
     window = menu.display(std::move(window));
     has_to_close = menu.update();
@@ -22,6 +25,8 @@ View::View(Game &game): game(game), menu(game) {
 }
 
 std::unique_ptr<sf::RenderWindow> View::draw_level(std::unique_ptr<sf::RenderWindow> window) {
+
+    view.setCenter(game.get_camera().get_x(), game.get_camera().get_y());
     window->setView(view);
 
     sf::Texture dirt_texture;

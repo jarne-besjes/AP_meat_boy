@@ -68,6 +68,15 @@ void Game::loop() {
         } else if (game_state == Game_state::GAME) {
             world.get_player().update(left, right, down, up, world.get_entities());
             window = view.draw_entities(std::move(window), world.get_entities());
+            if (moving_camera) {
+                if (world.get_player().get_position().y < camera.get_y()) {
+                    camera.move_up(std::abs(world.get_player().get_position().y - camera.get_y()));
+                } else if (world.get_player().get_position().y > camera.get_y() + WINDOW_HEIGHT/2) {
+                    // TODO: die
+                    state_manager.set_state(Game_state::MENU);
+                }
+            }
+
             if (world.get_player().collides_with_finish()) {
                 // TODO
                 std::cout << "You won!" << std::endl;
@@ -85,7 +94,7 @@ void Game::loop() {
             window = view.draw_level_choice(std::move(window), levels, level);
             if (!level.empty()) {
                 std::cout << level << std::endl;
-                int level_size = world.load_level(level);
+                int level_size = world.load_level(level, moving_camera);
                 camera.set_level_size(level_size);
                 state_manager.set_state(Game_state::GAME);
             }
@@ -122,5 +131,9 @@ void Game::add_game_to_player_observer() {
 
 World &Game::get_world() {
     return world;
+}
+
+Camera &Game::get_camera() {
+    return camera;
 }
 

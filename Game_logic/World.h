@@ -6,6 +6,7 @@
 #define MEAT_BOY_WORLD_H
 #include <iostream>
 #include "Player.h"
+#include "../Camera.h"
 #include "Blocks/Finish.h"
 
 class Entity;
@@ -21,7 +22,7 @@ class World {
 public:
     World();
 
-    int load_level(const std::string& level_name); // returns the level y size for the initialization of the camera
+    int load_level(const std::string& level_name, bool &moving_camera); // returns the level y size for the initialization of the camera
     Player &get_player();
 
     std::vector<std::shared_ptr<Entity>> &get_entities();
