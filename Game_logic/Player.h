@@ -22,16 +22,22 @@ class Player : public IObservable{
 
     bool on_ground = false;
 
+    bool collided_with_finish = false;
+
 public:
     Player();
 
-    void set_position(double x, double y);
+    void reset();
 
-    void key_pressed(bool left, bool right, bool down, bool up);
+    void set_position(double x, double y);
 
     void update(bool left, bool right, bool down, bool up, std::vector<std::shared_ptr<Entity>> &entities);
 
     Position get_position();
+
+    bool collides_with_finish() const {
+        return collided_with_finish;
+    }
 
     Hitbox get_hitbox();
 };

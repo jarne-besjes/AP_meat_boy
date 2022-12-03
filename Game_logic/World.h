@@ -21,7 +21,7 @@ class World {
 public:
     World();
 
-    void load_level(const std::string& level_name);
+    int load_level(const std::string& level_name); // returns the level y size for the initialization of the camera
     Player &get_player();
 
     std::vector<std::shared_ptr<Entity>> &get_entities();

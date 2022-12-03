@@ -8,7 +8,7 @@ ENDIF()
 FIND_PACKAGE(SFML 2 COMPONENTS system window graphics)
 
 # The source files to compile
-SET(SRC Game.cpp Main_menu.cpp View.cpp View.h State.cpp Level_selection.cpp)
+SET(SRC Game.cpp Main_menu.cpp View.cpp View.h State.cpp Level_selection.cpp Finished_menu.cpp)
 
 # Add include dirs for SFML
 INCLUDE_DIRECTORIES(${SFML_INCLUDE_DIR})

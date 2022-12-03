@@ -4,6 +4,7 @@
 
 #ifndef MEAT_BOY_CAMERA_H
 #define MEAT_BOY_CAMERA_H
+#include "Values.cpp"
 
 
 class Camera {
@@ -13,11 +14,13 @@ class Camera {
     int y;       // we only change the camera vertically
     // y = level size * 50 (blocks are 50x50) - 300
 
-    int width = 600; // TODO: use values.cpp
-    int height = 300;
+    int width = WINDOW_WIDTH;
+    int height = WINDOW_HEIGHT;
 
 public:
-    Camera(int level_size);
+    Camera();
+
+    void set_level_size(int level_y_size);
 
     int get_x() const;
     int get_y() const;

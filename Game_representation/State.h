@@ -8,7 +8,8 @@
 enum class Game_state {
     MENU,
     GAME,
-    LEVEL_CHOICE
+    LEVEL_CHOICE,
+    FINISHED
 };
 
 class State_manager {

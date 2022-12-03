@@ -86,4 +86,11 @@ View::draw_level_choice(std::unique_ptr<sf::RenderWindow> window, const std::vec
     return window;
 }
 
+std::unique_ptr<sf::RenderWindow> View::draw_finished(std::unique_ptr<sf::RenderWindow> window, bool &enter_has_been_pressed) {
+    window = finished_menu.draw(std::move(window));
+    enter_has_been_pressed = finished_menu.update();
+
+    return window;
+}
+
 

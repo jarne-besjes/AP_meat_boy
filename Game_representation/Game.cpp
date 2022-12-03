@@ -7,12 +7,10 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include "../Values.cpp"
 #include <fstream>
 
 // Also change this in Player.cpp (these classes should be in seperate libraries, so we cant include this file)
-// TODO: maybe make a VALUES.cpp file that contains all the values
-static int WINDOW_WIDTH = 600;
-static int WINDOW_HEIGHT = 600;
 static int FRAME_TIME = 16;
 
 Game::Game() : view(*this){
@@ -70,6 +68,11 @@ void Game::loop() {
         } else if (game_state == Game_state::GAME) {
             world.get_player().update(left, right, down, up, world.get_entities());
             window = view.draw_entities(std::move(window), world.get_entities());
+            if (world.get_player().collides_with_finish()) {
+                // TODO
+                std::cout << "You won!" << std::endl;
+                state_manager.set_state(Game_state::FINISHED);
+            }
         } else if (game_state == Game_state::LEVEL_CHOICE) {
             std::string level;
             std::string path = "assets/levels";
@@ -82,8 +85,15 @@ void Game::loop() {
             window = view.draw_level_choice(std::move(window), levels, level);
             if (!level.empty()) {
                 std::cout << level << std::endl;
-                world.load_level(level);
+                int level_size = world.load_level(level);
+                camera.set_level_size(level_size);
                 state_manager.set_state(Game_state::GAME);
+            }
+        } else if (game_state == Game_state::FINISHED) {
+            bool enter_has_been_pressed = false;
+            window = view.draw_finished(std::move(window), enter_has_been_pressed);
+            if (enter_has_been_pressed) {
+                state_manager.set_state(Game_state::MENU);
             }
         }
         window->display();

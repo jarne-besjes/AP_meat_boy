@@ -28,7 +28,12 @@ void Camera::move_up(int amount) {
     y -= amount;
 }
 
-Camera::Camera(int level_size) {
-    y = level_size * 50 - 300;
+void Camera::set_level_size(int level_y_size) {
+    y = level_y_size * 50 - 300;
 }
+
+Camera::Camera() {
+    y = 0;
+}
+
 

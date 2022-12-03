@@ -14,7 +14,9 @@ std::shared_ptr<Entity> create_entity(std::shared_ptr<Entity_factory> &factory, 
     return factory->create_entity(x, y, width, height);
 }
 
-void World::load_level(const std::string& level_name) {
+int World::load_level(const std::string& level_name) {
+    entities.clear();
+    player.reset();
     // factories
     std::shared_ptr<Entity_factory> dirt_factory = std::make_shared<Dirt_factory>();
     std::shared_ptr<Entity_factory> grass_factory = std::make_shared<Grass_factory>();
@@ -48,6 +50,8 @@ void World::load_level(const std::string& level_name) {
     if (!finish_set || !player_set) {
         throw std::runtime_error("Finish or player not set");
     }
+
+    return level.size();
 }
 
 Player &World::get_player() {

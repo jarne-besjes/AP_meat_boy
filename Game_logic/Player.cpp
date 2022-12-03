@@ -61,94 +61,45 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
     bool collided = false;
     for(auto &entity : entities) {
         if (this->get_hitbox().collides(entity->get_hitbox())) {
-            collided = true;
-            double shortest_x;
-            double shortest_y;
-            shortest_x = std::min(std::abs(this->get_hitbox().get_right() - entity->get_hitbox().get_left()),
-                                  std::abs(this->get_hitbox().get_left() - entity->get_hitbox().get_right()));
-            shortest_y = std::min(std::abs(this->get_hitbox().get_top() - entity->get_hitbox().get_bottom()),
-                                  std::abs(this->get_hitbox().get_bottom() - entity->get_hitbox().get_top()));
+            if (entity->get_type() == Block_type::FINISH) {
+                collided_with_finish = true;
+            } else {
+                collided = true;
+                double shortest_x;
+                double shortest_y;
+                shortest_x = std::min(std::abs(this->get_hitbox().get_right() - entity->get_hitbox().get_left()),
+                                      std::abs(this->get_hitbox().get_left() - entity->get_hitbox().get_right()));
+                shortest_y = std::min(std::abs(this->get_hitbox().get_top() - entity->get_hitbox().get_bottom()),
+                                      std::abs(this->get_hitbox().get_bottom() - entity->get_hitbox().get_top()));
 
-             if (shortest_x <= shortest_y) {
-                 //horizontal
-                 if (velocity_x > 0) {
-                     position_x = entity->get_x() - SPRITEWIDTH;
-                 } else if (velocity_x < 0) {
-                     position_x = entity->get_x() + SPRITEWIDTH;
-                 }
-                 velocity_x = 0;
-             } else {
-                 // vertical
-                 if (velocity_y > 0) {
-                     position_y = entity->get_y() - SPRITEHEIGHT;
-                     on_ground = true;
-                 } else if (velocity_y < 0) {
-                     position_y = entity->get_y() + SPRITEHEIGHT;
-                 }
-                 velocity_y = 0;
-             }
+                if (shortest_x <= shortest_y) {
+                    //horizontal
+                    if (velocity_x > 0) {
+                        position_x = entity->get_x() - SPRITEWIDTH;
+                    } else if (velocity_x < 0) {
+                        position_x = entity->get_x() + SPRITEWIDTH;
+                    }
+                    velocity_x = 0;
+                } else {
+                    // vertical
+                    if (velocity_y > 0) {
+                        position_y = entity->get_y() - SPRITEHEIGHT;
+                        on_ground = true;
+                    } else if (velocity_y < 0) {
+                        position_y = entity->get_y() + SPRITEHEIGHT;
+                    }
+                    velocity_y = 0;
+                }
+            }
         }
-
-        if (!collided) on_ground = false;
-
-
-
-        /*if (this->get_hitbox().collides_left_side(entity->get_hitbox())) {
-            position_x = entity->get_hitbox().left_side - SPRITEWIDTH;
-            velocity_x = 0;
-        }
-        if (this->get_hitbox().collides_right_side(entity->get_hitbox())) {
-            position_x = entity->get_hitbox().left_side + SPRITEWIDTH;
-            velocity_x = 0;
-        }
-        if (this->get_hitbox().collides_top_side(entity->get_hitbox())) {
-            position_y = entity->get_hitbox().top_side - SPRITEHEIGHT;
-            velocity_y = 0;
-            on_ground = true;
-        }
-        if (this->get_hitbox().collides_bottom_side(entity->get_hitbox())) {
-            position_y = entity->get_hitbox().top_side + SPRITEHEIGHT;
-            velocity_y = 0;
-        }*/
     }
 
-
+    if (!collided) on_ground = false;
 
     notify_observers();
 
 }
 
-void Player::key_pressed(bool left, bool right, bool down, bool up) {
-    // TODO: check how velocity_y is update, this is always .2 now
-
-    /*
-    if (up  && std::abs(velocity_y) <= 0.2) {
-        std::cout << "jump; velocity y: " << velocity_y << std::endl;
-        velocity_y -= JUMP_ACCEL;
-        if (velocity_y < -PLAYER_MAX_SPEED) {
-            velocity_y = -PLAYER_MAX_SPEED;
-        }
-    }/*
-    if (down) {
-        velocity_y += PLAYER_ACCELERATION;
-        if (velocity_y > PLAYER_MAX_SPEED) {
-            velocity_y = PLAYER_MAX_SPEED;
-        }
-    }
-    if (right) {
-        velocity_x += PLAYER_ACCELERATION;
-        if (velocity_x > PLAYER_MAX_SPEED) {
-            velocity_x = PLAYER_MAX_SPEED;
-        }
-    }
-    if (left) {
-        velocity_x -= PLAYER_ACCELERATION;
-        if (velocity_x < -PLAYER_MAX_SPEED) {
-            velocity_x = -PLAYER_MAX_SPEED;
-        }
-    }
-    */
-}
 
 
 Position Player::get_position() {
@@ -171,4 +122,13 @@ void Player::set_position(double x, double y) {
     position_x = x;
     position_y = y;
 
+}
+
+void Player::reset() {
+    position_x = 100;
+    position_y = 100;
+    velocity_x = 0;
+    velocity_y = 0;
+    collided_with_finish = false;
+    on_ground = false;
 }
