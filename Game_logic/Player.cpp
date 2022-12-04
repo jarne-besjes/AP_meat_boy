@@ -8,7 +8,15 @@
 #include "Hitbox.h"
 #include "../Values.cpp"
 
-
+/**
+ * @brief Update the player object
+ * 
+ * @param left : if the left key is pressed
+ * @param right : if the right key is pressed
+ * @param down : if the down key is pressed
+ * @param up : if the up key is pressed
+ * @param entities : vector of entities in the world the player is in
+ */
 void Player::update(bool left, bool right, bool down, bool up, std::vector<std::shared_ptr<Entity>> &entities) {
 
     if (up && on_ground) {
@@ -43,19 +51,6 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
 
     position_x += velocity_x;
     position_y += velocity_y;
-
-/*    if (position_x < 0) {
-        position_x = 0;
-    } else if (position_x > WINDOW_WIDTH - SPRITEWIDTH) {
-        position_x = WINDOW_WIDTH - SPRITEWIDTH;
-    }
-    if (position_y > WINDOW_HEIGHT - SPRITEHEIGHT) {
-        position_y = WINDOW_HEIGHT - SPRITEHEIGHT;
-        velocity_y = 0;
-    } else if (position_y < 0) {
-        position_y = 0;
-    }*/
-
 
     // check hitboxes
     bool collided = false;
@@ -100,16 +95,28 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
 
 }
 
-
-
+/**
+ * @brief Returns the position of the player
+ * 
+ * @return Position : position of the player
+ */
 Position Player::get_position() {
     return Position{position_x, position_y};
 }
 
+/**
+ * @brief Returns the hitbox of the player
+ * 
+ * @return Hitbox : hitbox of the player
+ */
 Hitbox Player::get_hitbox() {
     return Hitbox{position_x, position_y, SPRITEWIDTH, SPRITEHEIGHT};
 }
 
+/**
+ * @brief Construct a new Player:: Player object
+ * 
+ */
 Player::Player() {
     position_x = 100;
     position_y = 100;
@@ -118,12 +125,22 @@ Player::Player() {
 
 }
 
+/**
+ * @brief set the position of the player
+ * 
+ * @param x : x coordinate of the player
+ * @param y : y coordinate of the player
+ */
 void Player::set_position(double x, double y) {
     position_x = x;
     position_y = y;
 
 }
 
+/**
+ * @brief Reset the player
+ * 
+ */
 void Player::reset() {
     position_x = 100;
     position_y = 100;

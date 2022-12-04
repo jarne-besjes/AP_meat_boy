@@ -10,10 +10,29 @@
 
 using json = nlohmann::json;
 
+/**
+ * @brief Create a entity object
+ * 
+ * @param factory : the factory to create the object with
+ * @param x : x coordinate of the entity
+ * @param y : y coordinate of the entity
+ * @param width : width of the entity
+ * @param height : height of the entity
+ * 
+ * @return std::shared_ptr<Entity> : the created entity
+ */
 std::shared_ptr<Entity> create_entity(std::shared_ptr<Entity_factory> &factory, int x, int y, int width, int height) {
     return factory->create_entity(x, y, width, height);
 }
 
+/**
+ * @brief Load the level from a json file
+ * 
+ * @param level_name : the path of the level to load
+ * @param moving_camera : true if the camera has to move up when the player moves up
+ * 
+ * @return int : level_size
+ */
 int World::load_level(const std::string& level_name, bool &moving_camera) {
     entities.clear();
     player.reset();
@@ -54,14 +73,28 @@ int World::load_level(const std::string& level_name, bool &moving_camera) {
     return level.size();
 }
 
+/**
+ * @brief returns a reference to the player object
+ * 
+ * @return Player& : the player object
+ */
 Player &World::get_player() {
     return player;
 }
 
+/**
+ * @brief returns a reference to a vector of all entities in the world
+ * 
+ * @return std::vector<std::shared_ptr<Entity>>& : the vector of entities
+ */
 std::vector<std::shared_ptr<Entity>> &World::get_entities() {
     return entities;
 }
 
+/**
+ * @brief Construct a new World:: World object
+ * 
+ */
 World::World(): finish(0,0,50, 50) {
 
 }
