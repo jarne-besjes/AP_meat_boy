@@ -7,7 +7,13 @@
 #include "../Game_logic/Blocks/Entity.h"
 #include "../Values.cpp"
 
-
+/**
+ * @brief draw the menu to the game
+ * 
+ * @param window : window to draw the menu to
+ * @param has_to_close : boolean to check if the game has to close
+ * @return std::unique_ptr<sf::RenderWindow> : the window to draw the menu to
+ */
 std::unique_ptr<sf::RenderWindow> View::draw_menu(std::unique_ptr<sf::RenderWindow> window, bool &has_to_close) {
     // we have to reset our view, because we might have changed it in the level
     view.setCenter(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
@@ -18,12 +24,23 @@ std::unique_ptr<sf::RenderWindow> View::draw_menu(std::unique_ptr<sf::RenderWind
 
     return window;
 }
-
+/**
+ * @brief Construct a new View:: View object
+ * 
+ * @param game : the game object
+ */
 View::View(Game &game): game(game), menu(game) {
     view = sf::View(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
     main_font.loadFromFile("Game_representation/assets/Freshman-POdx.ttf");
 }
 
+/**
+ * @brief draw the level to the game
+ * 
+ * @param window : window to draw the level to
+ * 
+ * @return std::unique_ptr<sf::RenderWindow> : the window
+ */
 std::unique_ptr<sf::RenderWindow> View::draw_level(std::unique_ptr<sf::RenderWindow> window) {
 
     view.setCenter(game.get_camera().get_x(), game.get_camera().get_y());
@@ -46,6 +63,14 @@ std::unique_ptr<sf::RenderWindow> View::draw_level(std::unique_ptr<sf::RenderWin
     return window;
 }
 
+/**
+ * @brief draw the entities to the game
+ * 
+ * @param window : window to draw the entities to
+ * @param entities : entities to draw
+ * 
+ * @return std::unique_ptr<sf::RenderWindow> : the window
+ */
 std::unique_ptr<sf::RenderWindow>
 View::draw_entities(std::unique_ptr<sf::RenderWindow> window, std::vector<std::shared_ptr<Entity>> &entities) {
     sf::Texture dirt_texture;
@@ -83,6 +108,15 @@ View::draw_entities(std::unique_ptr<sf::RenderWindow> window, std::vector<std::s
     return window;
 }
 
+/**
+ * @brief Draw the level choice menu
+ * 
+ * @param window : window to draw the menu to
+ * @param levels : levels to draw
+ * @param level : level that has been selected
+ * 
+ * @return std::unique_ptr<sf::RenderWindow> : the window
+ */
 std::unique_ptr<sf::RenderWindow>
 View::draw_level_choice(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels, std::string &level) {
     window = selection.draw(std::move(window), levels);
@@ -91,6 +125,14 @@ View::draw_level_choice(std::unique_ptr<sf::RenderWindow> window, const std::vec
     return window;
 }
 
+/**
+ * @brief draw the finished menu
+ * 
+ * @param window : window to draw the menu to
+ * @param enter_has_been_pressed : boolean to check if enter has been pressed
+ * 
+ * @return std::unique_ptr<sf::RenderWindow> : the window
+ */
 std::unique_ptr<sf::RenderWindow> View::draw_finished(std::unique_ptr<sf::RenderWindow> window, bool &enter_has_been_pressed) {
     window = finished_menu.draw(std::move(window));
     enter_has_been_pressed = finished_menu.update();

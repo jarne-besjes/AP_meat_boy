@@ -5,6 +5,13 @@
 #include "Finished_menu.h"
 #include "../Values.cpp"
 
+/**
+ * @brief Draw the finished menu to the screen
+ * 
+ * @param window : window to draw to
+ * 
+ * @return std::unique_ptr<sf::RenderWindow> : the window
+ */
 std::unique_ptr<sf::RenderWindow> Finished_menu::draw(std::unique_ptr<sf::RenderWindow> window) {
     window->setView(view);
     sf::Text text;
@@ -27,6 +34,12 @@ std::unique_ptr<sf::RenderWindow> Finished_menu::draw(std::unique_ptr<sf::Render
     return window;
 }
 
+/**
+ * @brief update the finished menu (keypresses)
+ * 
+ * @return true : if the enter key is pressed
+ * @return false : if the enter key is not pressed
+ */
 bool Finished_menu::update() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
         return true;
@@ -34,6 +47,10 @@ bool Finished_menu::update() {
     return false;
 }
 
+/**
+ * @brief Construct a new Finished_menu::Finished_menu object
+ * 
+ */
 Finished_menu::Finished_menu() {
     view.setCenter(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     main_font.loadFromFile("Game_representation/assets/Debrosee.ttf");

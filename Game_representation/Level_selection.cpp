@@ -6,10 +6,22 @@
 #include <chrono>
 #include <thread>
 
+/**
+ * @brief Construct a new Level_selection::Level_selection object   
+ * 
+ */
 Level_selection::Level_selection() {
     main_font.loadFromFile("Game_representation/assets/Freshman-POdx.ttf");
 }
 
+/**
+ * @brief Draw the level selection screen
+ * 
+ * @param window : window to draw to
+ * @param levels : vector of the possible levels to choose from
+ * 
+ * @return std::unique_ptr<sf::RenderWindow> : the window
+ */
 std::unique_ptr<sf::RenderWindow>
 Level_selection::draw(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels) {
     for (int i = 0; i < levels.size(); i++) {
@@ -29,6 +41,15 @@ Level_selection::draw(std::unique_ptr<sf::RenderWindow> window, const std::vecto
     return window;
 }
 
+/**
+ * @brief Update the level selection screen (keypresses)
+ * 
+ * @param window : window to update
+ * @param levels : vector of the possible levels to choose from
+ * @param level : the level that is selected
+ * 
+ * @return std::unique_ptr<sf::RenderWindow> : the window
+ */
 std::unique_ptr<sf::RenderWindow>
 Level_selection::update(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels,
                         std::string &level)

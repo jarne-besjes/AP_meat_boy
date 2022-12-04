@@ -10,9 +10,12 @@
 #include "../Values.cpp"
 #include <fstream>
 
-// Also change this in Player.cpp (these classes should be in seperate libraries, so we cant include this file)
 static int FRAME_TIME = 16;
 
+/**
+ * @brief Construct a new Game:: Game object
+ * 
+ */
 Game::Game() : view(*this){
 
     window = std::make_unique<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Meat boy!");
@@ -21,13 +24,15 @@ Game::Game() : view(*this){
 
 }
 
+/**
+ * @brief Main game loop
+ * 
+ */
 void Game::loop() {
     bool left = false;
     bool right = false;
     bool up = false;
     bool down = false;
-
-    std::cout << &state_manager << std::endl;
 
     while (window->isOpen()) {
         Game_state game_state = state_manager.get_state();
@@ -109,30 +114,60 @@ void Game::loop() {
     }
 }
 
+/**
+ * @brief display the level on the screen
+ * 
+ */
 void Game::display_level() {
     window = view.draw_level(std::move(window));
 }
 
+/**
+ * @brief Destroy the Game:: Game object
+ * 
+ */
 Game::~Game() {
 }
 
+/**
+ * @brief Change the game state to level choice
+ * 
+ */
 void Game::play_button_pressed() {
     state_manager.set_state(Game_state::LEVEL_CHOICE);
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
+/**
+ * @brief update the game
+ * 
+ */
 void Game::update() {
     display_level();
 }
 
+/**
+ * @brief add this game object to the player observer
+ * 
+ */
 void Game::add_game_to_player_observer() {
     world.get_player().register_observer(shared_from_this());
 }
 
+/**
+ * @brief Get the world object
+ * 
+ * @return World& : the world
+ */
 World &Game::get_world() {
     return world;
 }
 
+/**
+ * @brief Get the camera object
+ * 
+ * @return Camera& : the camera
+ */
 Camera &Game::get_camera() {
     return camera;
 }

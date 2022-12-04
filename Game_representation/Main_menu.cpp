@@ -10,10 +10,19 @@
 
 #include "Game.h"
 
+/**
+ * @brief Construct a new Main_menu::Main_menu object
+ * 
+ * @param game : game object
+ */
 Main_menu::Main_menu(Game &game): game(game) {
     main_font.loadFromFile("Game_representation/assets/Debrosee.ttf");
 }
 
+/**
+ * @brief Draw the main menu to the screen
+ * 
+ */
 void Main_menu::draw() {
     game_title.setFont(main_font);
     game_title.setString("Meat Boy");
@@ -44,6 +53,12 @@ void Main_menu::draw() {
     }
 }
 
+/**
+ * @brief Update the main menu (keypresses)
+ * 
+ * @return true : if the quit button has been pressed (close the game)
+ * @return false : if the quit button hasn't been pressed
+ */
 bool Main_menu::update() {
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
@@ -75,6 +90,13 @@ bool Main_menu::update() {
     return false;
 }
 
+/**
+ * @brief Display the main menu to the window
+ * 
+ * @param window : window to draw to
+ * 
+ * @return std::unique_ptr<sf::RenderWindow> : the window
+ */
 std::unique_ptr<sf::RenderWindow> Main_menu::display(std::unique_ptr<sf::RenderWindow> window) {
     window->draw(game_title);
     window->draw(play_button);
