@@ -27,7 +27,7 @@
  */
 bool Hitbox::collides(const Hitbox &other) const {
     if (right_side > other.left_side && left_side < other.right_side) {
-        if (top_side < other.bottom_side && bottom_side > other.top_side) {
+        if (top_side <= other.bottom_side && bottom_side >= other.top_side) {
             return true;
         }
     }
@@ -58,7 +58,7 @@ if (left_side < other.right_side && left_side > other.left_side) {
  * @param w : width of the hitbox
  * @param h : height of the hitbox
  */
-Hitbox::Hitbox(int x, int y, int w, int h) : x(x), y(y), w(w), h(h) {
+Hitbox::Hitbox(double x, double y, double w, double h) : x(x), y(y), w(w), h(h) {
     left_side = x;
     right_side = x + w;
     top_side = y;
@@ -118,7 +118,7 @@ bool Hitbox::collides_bottom_side(const Hitbox &other) const {
  * 
  * @return int : x coordinate of the hitbox
  */
-int Hitbox::get_top() const {
+double Hitbox::get_top() const {
     return top_side;
 }
 
@@ -127,7 +127,7 @@ int Hitbox::get_top() const {
  * 
  * @return int : y coordinate of the bottom of the hitbox
  */
-int Hitbox::get_bottom() const {
+double Hitbox::get_bottom() const {
     return bottom_side;
 }
 
@@ -136,7 +136,7 @@ int Hitbox::get_bottom() const {
  * 
  * @return int : x coordinate of the left side of the hitbox
  */
-int Hitbox::get_left() const {
+double Hitbox::get_left() const {
     return left_side;
 }
 
@@ -145,6 +145,6 @@ int Hitbox::get_left() const {
  * 
  * @return int : x coordinate of the right side of the hitbox
  */
-int Hitbox::get_right() const {
+double Hitbox::get_right() const {
     return right_side;
 }

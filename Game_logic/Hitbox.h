@@ -7,25 +7,25 @@
 
 class Hitbox {
 public:
-    Hitbox(int x, int y, int w, int h);
+    Hitbox(double x, double y, double w, double h);
 
 
-    int x;
-    int y;
-    int w;
-    int h;
+    double x;
+    double y;
+    double w;
+    double h;
 
-    int top_side;
-    int bottom_side;
-    int left_side;
-    int right_side;
+    double top_side;
+    double bottom_side;
+    double left_side;
+    double right_side;
 
     bool collides(const Hitbox &other) const;
 
-    int get_top() const;
-    int get_bottom() const;
-    int get_left() const;
-    int get_right() const;
+    double get_top() const;
+    double get_bottom() const;
+    double get_left() const;
+    double get_right() const;
 
     // functions to check collisions: check if THIS OBJECT COLLIDES with the ... side of the other object
     bool collides_left_side(const Hitbox &other) const;

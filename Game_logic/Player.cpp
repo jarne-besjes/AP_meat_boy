@@ -40,7 +40,7 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
             if (velocity_x < 0) {
                 velocity_x = 0;
             }
-        } else if (velocity_x < 0 && !on_ground) {
+        } else if (velocity_x < 0) {
             velocity_x += PLAYER_DECELERATION;
             if (velocity_x > 0) {
                 velocity_x = 0;
@@ -81,7 +81,7 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
                         position_y = entity->get_y() - SPRITEHEIGHT;
                         on_ground = true;
                     } else if (velocity_y < 0) {
-                        position_y = entity->get_y() + SPRITEHEIGHT;
+                        position_y = entity->get_y() + SPRITEHEIGHT + 0.1f;
                     }
                     velocity_y = 0;
                 }
