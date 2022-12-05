@@ -1,16 +1,27 @@
 {
-  "moving_camera": false,
+  "moving_camera": true,
   "level":
       ["dddddddddddd",
-        "dhhhhhhhhhhd",
-        "dhhhhhhhhhhd",
+        "dddddddddddd",
+        "dddddddddddd",
+        "dddddddddddd",
+        "dddddddddddd",
+        "dddddddddddd",
+        "dhhhdhhhdddd",
         "dhfhhhhhhhhd",
-        "dhdddddddhhd",
-        "dhhhhhhhhhhd",
-        "dhhdddddddhd",
+        "dhdddddhhhhd",
         "dhhhhhhhhhhd",
         "dhhhhhhhhhhd",
-        "dhdddddddhhd",
+        "dhhhhhhdddhd",
+        "dhhhhhddhhhd",
+        "dhhhhddhhhhd",
+        "dhhdhhhhhhhd",
+        "dhhhhhhhhhhd",
+        "dhhhhhhhhhhd",
+        "ddddddhhhhhd",
+        "dhhhhhddhhhd",
+        "dhhhhhhhhhhd",
         "dphhhhhhhhhd",
-        "dddddddddddd"]
+        "dddddddddddd"
+      ]
 }
