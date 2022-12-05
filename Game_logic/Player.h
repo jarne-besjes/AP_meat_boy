@@ -22,6 +22,9 @@ class Player : public IObservable{
 
     bool on_ground = false;
 
+    bool against_wall = false;
+    bool against_wall_left = false;
+
     bool collided_with_finish = false;
 
 public:

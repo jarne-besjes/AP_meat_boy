@@ -19,11 +19,26 @@
  */
 void Player::update(bool left, bool right, bool down, bool up, std::vector<std::shared_ptr<Entity>> &entities) {
 
-    if (up && on_ground) {
-        on_ground = false;
-        velocity_y -= JUMP_ACCEL;
-    } else if (!on_ground){
-        velocity_y += GRAVITY;
+    if (up) {
+        if (on_ground) {
+            velocity_y = -JUMP_ACCEL;
+            on_ground = false;
+        } else if (against_wall) {
+            velocity_y = -JUMP_ACCEL;
+            velocity_x = against_wall_left ? PLAYER_ACCELERATION * 300 : -PLAYER_ACCELERATION * 300;
+            against_wall = false;
+        }
+    }
+
+    if (!on_ground) {
+        if (!against_wall) {
+            velocity_y += GRAVITY;
+        } else {
+            velocity_y += GRAVITY / 4;
+            if (velocity_y > PLAYER_MAX_SPEED / 2) {
+                velocity_y = PLAYER_MAX_SPEED / 2;
+            }
+        }
     }
 
     if (velocity_y > PLAYER_MAX_SPEED) {
@@ -68,15 +83,19 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
                                       std::abs(this->get_hitbox().get_bottom() - entity->get_hitbox().get_top()));
 
                 if (shortest_x <= shortest_y) {
-                    //horizontal
+                   //horizontal
+                   against_wall = true;
                     if (velocity_x > 0) {
                         position_x = entity->get_x() - SPRITEWIDTH;
+                        against_wall_left = false;
                     } else if (velocity_x < 0) {
                         position_x = entity->get_x() + SPRITEWIDTH;
+                        against_wall_left = true;
                     }
                     velocity_x = 0;
                 } else {
                     // vertical
+                    against_wall = false;
                     if (velocity_y > 0) {
                         position_y = entity->get_y() - SPRITEHEIGHT;
                         on_ground = true;
@@ -89,7 +108,10 @@ void Player::update(bool left, bool right, bool down, bool up, std::vector<std::
         }
     }
 
-    if (!collided) on_ground = false;
+    if (!collided) {
+        against_wall = false;
+        on_ground = false;
+    }
 
     notify_observers();
 
