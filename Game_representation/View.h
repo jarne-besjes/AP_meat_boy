@@ -24,7 +24,7 @@ class View {
 
     Finished_menu finished_menu;
 
-    sf::View view;
+    //sf::View view;
 
     sf::Font main_font;
 
@@ -35,7 +35,7 @@ public:
 
     std::unique_ptr<sf::RenderWindow> draw_level(std::unique_ptr<sf::RenderWindow> window);
 
-    std::unique_ptr<sf::RenderWindow> draw_entities(std::unique_ptr<sf::RenderWindow> window, std::vector<std::shared_ptr<Entity>> &entities);
+    static std::unique_ptr<sf::RenderWindow> draw_entities(std::unique_ptr<sf::RenderWindow> window, std::vector<std::shared_ptr<Entity>> &entities);
 
     std::unique_ptr<sf::RenderWindow>
     draw_level_choice(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels, std::string &level);

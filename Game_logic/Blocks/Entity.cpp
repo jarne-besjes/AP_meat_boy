@@ -60,6 +60,14 @@ void Entity::set_position(int x, int y) {
     this->y = y;
 }
 
+double Entity::get_projected_x() const {
+    return projected_x;
+}
+
+double Entity::get_projected_y() const {
+    return projected_y;
+}
+
 /**
  * @brief Construct a new Grass Block:: Grass Block object
  * 

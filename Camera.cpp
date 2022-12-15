@@ -3,6 +3,7 @@
 //
 
 #include "Camera.h"
+#include <iostream>
 /**
  * @brief Returns the x coordinate of the camera
  * 
@@ -46,6 +47,8 @@ int Camera::get_height() const {
  */
 void Camera::set_y(int _y) {
     Camera::y = _y;
+    bottom_y = y - WINDOW_HEIGHT/2;
+    top_y = y + WINDOW_HEIGHT/2;
 }
 
 /**
@@ -55,6 +58,8 @@ void Camera::set_y(int _y) {
  */
 void Camera::move_up(int amount) {
     y -= amount;
+    bottom_y = y - WINDOW_HEIGHT/2;
+    top_y = y + WINDOW_HEIGHT/2;
 }
 
 /**
@@ -65,6 +70,8 @@ void Camera::move_up(int amount) {
  */
 void Camera::set_level_size(int level_y_size) {
     y = level_y_size * 50 - 300;
+    bottom_y = y - WINDOW_HEIGHT/2;
+    top_y = y + WINDOW_HEIGHT/2;
 }
 
 /**
@@ -75,4 +82,32 @@ Camera::Camera() {
     y = 0;
 }
 
+void Camera::get_visible_entities(std::vector<std::shared_ptr<Entity>> &entities) const {
+    for (auto &entity : entities) {
+        if (entity->get_y() > bottom_y - 50 && entity->get_y() < top_y + 50) {
+            entity->visible = true;
+        }
+    }
+}
+
+void Camera::clear_visible_entities(std::vector<std::shared_ptr<Entity>> &entities) {
+    for (auto &entity : entities) {
+        entity->visible = false;
+    }
+}
+
+void Camera::project_entities(std::vector<std::shared_ptr<Entity>> &entities) {
+    for (auto &entity : entities) {
+        if (entity->visible) {
+            entity->projected_x = entity->get_x();
+            entity->projected_y = WINDOW_HEIGHT - (top_y - entity->get_y());
+        }
+    }
+}
+
+void Camera::project_player(Player &player) {
+    Position playerpos = player.get_position();
+    player.projected_x = playerpos.x;
+    player.projected_y = WINDOW_HEIGHT - (top_y - playerpos.y);
+}
 

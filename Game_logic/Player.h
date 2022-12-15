@@ -38,11 +38,18 @@ public:
 
     Position get_position();
 
+    Position get_projected_position();
+
     bool collides_with_finish() const {
         return collided_with_finish;
     }
 
     Hitbox get_hitbox();
+
+    ~Player() override = default;
+
+    double projected_x = 0;
+    double projected_y = 0;
 };
 
 

@@ -171,3 +171,7 @@ void Player::reset() {
     collided_with_finish = false;
     on_ground = false;
 }
+
+Position Player::get_projected_position() {
+    return Position{projected_x, projected_y};
+}

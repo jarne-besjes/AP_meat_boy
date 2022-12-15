@@ -72,6 +72,10 @@ void Game::loop() {
             }
         } else if (game_state == Game_state::GAME) {
             world.get_player().update(left, right, down, up, world.get_entities());
+            camera.clear_visible_entities(world.get_entities());
+            camera.get_visible_entities(world.get_entities());
+            camera.project_entities(world.get_entities());
+            camera.project_player(world.get_player());
             window = view.draw_entities(std::move(window), world.get_entities());
             if (moving_camera) {
                 if (world.get_player().get_position().y < camera.get_y()) {

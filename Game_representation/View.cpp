@@ -15,9 +15,6 @@
  * @return std::unique_ptr<sf::RenderWindow> : the window to draw the menu to
  */
 std::unique_ptr<sf::RenderWindow> View::draw_menu(std::unique_ptr<sf::RenderWindow> window, bool &has_to_close) {
-    // we have to reset our view, because we might have changed it in the level
-    view.setCenter(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
-    window->setView(view);
     menu.draw();
     window = menu.display(std::move(window));
     has_to_close = menu.update();
@@ -30,7 +27,6 @@ std::unique_ptr<sf::RenderWindow> View::draw_menu(std::unique_ptr<sf::RenderWind
  * @param game : the game object
  */
 View::View(Game &game): game(game), menu(game) {
-    view = sf::View(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
     main_font.loadFromFile("Game_representation/assets/Freshman-POdx.ttf");
 }
 
@@ -43,9 +39,6 @@ View::View(Game &game): game(game), menu(game) {
  */
 std::unique_ptr<sf::RenderWindow> View::draw_level(std::unique_ptr<sf::RenderWindow> window) {
 
-    view.setCenter(game.get_camera().get_x(), game.get_camera().get_y());
-    window->setView(view);
-
     sf::Texture dirt_texture;
     sf::Texture meat_boy_texture;
     dirt_texture.loadFromFile("Game_representation/assets/textures/tex_dirt.jpg");
@@ -54,7 +47,7 @@ std::unique_ptr<sf::RenderWindow> View::draw_level(std::unique_ptr<sf::RenderWin
     sf::Sprite dirt_sprite(dirt_texture);
     sf::Sprite meat_boy_sprite(meat_boy_texture);
     dirt_sprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
-    Position player_position = game.get_world().get_player().get_position();
+    Position player_position = game.get_world().get_player().get_projected_position();
     meat_boy_sprite.setPosition(player_position.x, player_position.y);
 
     window->draw(meat_boy_sprite);
@@ -90,8 +83,10 @@ View::draw_entities(std::unique_ptr<sf::RenderWindow> window, std::vector<std::s
 
 
     for (auto &entity : entities) {
-        int pos_x = entity->get_x();
-        int pos_y = entity->get_y();
+
+        if (!entity->visible) continue; // only draw the visible objects
+        int pos_x = entity->get_projected_x();
+        int pos_y = entity->get_projected_y();
         if (entity->get_type() == Block_type::DIRT) {
             dirt_sprite.setPosition(pos_x, pos_y);
             window->draw(dirt_sprite);

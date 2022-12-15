@@ -11,7 +11,7 @@
 class Finished_menu {
     sf::Font main_font;
 
-    sf::View view;
+    //sf::View view;
 
 public:
     Finished_menu();

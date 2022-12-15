@@ -25,6 +25,12 @@ protected:
 
     Block_type block_type;
 public:
+
+    bool visible = false;
+
+    double projected_x = 0;
+    double projected_y = 0;
+
     Entity(int x, int y, int width, int height);
 
     virtual Block_type get_type() const = 0;
@@ -39,6 +45,8 @@ public:
     int get_width() const;
     int get_height() const;
 
+    double get_projected_x() const;
+    double get_projected_y() const;
 };
 
 class GrassBlock : public Entity {
