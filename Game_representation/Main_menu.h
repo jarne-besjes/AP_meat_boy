@@ -7,32 +7,35 @@
 #include "SFML/Graphics.hpp"
 #include <memory>
 
-class Game;
+namespace Game_representation {
 
-class Main_menu {
-    Game &game;
+    class Game;
 
-    sf::Font main_font;
+    class Main_menu {
+        Game &game;
 
-    sf::Text game_title;
-    sf::Text play_button;
-    sf::Text quit_button;
+        sf::Font main_font;
 
-    bool play_button_selected = true;
-    bool quit_button_selected = false;
-    bool play_button_pressed = false;
-    bool quit_button_pressed = false;
+        sf::Text game_title;
+        sf::Text play_button;
+        sf::Text quit_button;
 
-public:
-    explicit Main_menu(Game &game);
+        bool play_button_selected = true;
+        bool quit_button_selected = false;
+        bool play_button_pressed = false;
+        bool quit_button_pressed = false;
 
-    bool update(); // if bool == true, the game has to close
+    public:
+        explicit Main_menu(Game &game);
 
-    void draw();
+        bool update(); // if bool == true, the game has to close
 
-    std::unique_ptr<sf::RenderWindow> display(std::unique_ptr<sf::RenderWindow> window);
+        void draw();
 
-};
+        std::unique_ptr<sf::RenderWindow> display(std::unique_ptr<sf::RenderWindow> window);
 
+    };
+
+}
 
 #endif //MEAT_BOY_MAIN_MENU_H

@@ -10,62 +10,67 @@
 // we use this enum to determine what type of block we are dealing with
 // we use inheritance to be able to expand later
 
-enum class Block_type {
-    GRASS,
-    DIRT,
-    FINISH
-};
 
-class Entity {
-protected:
-    int x;
-    int y;
-    int width;
-    int height;
+namespace Game_logic {
 
-    Block_type block_type;
-public:
+    enum class Block_type {
+        GRASS,
+        DIRT,
+        FINISH
+    };
 
-    bool visible = false;
+    class Entity {
+    protected:
+        int x;
+        int y;
+        int width;
+        int height;
 
-    double projected_x = 0;
-    double projected_y = 0;
+        Block_type block_type;
+    public:
 
-    Entity(int x, int y, int width, int height);
+        bool visible = false;
 
-    virtual Block_type get_type() const = 0;
+        double projected_x = 0;
+        double projected_y = 0;
 
-    virtual Hitbox get_hitbox() const = 0;
+        Entity(int x, int y, int width, int height);
 
-    void set_position(int x, int y);
+        virtual Block_type get_type() const = 0;
+
+        virtual Game_logic::Hitbox get_hitbox() const = 0;
+
+        void set_position(int x, int y);
 
 
-    int get_x() const;
-    int get_y() const;
-    int get_width() const;
-    int get_height() const;
+        int get_x() const;
+        int get_y() const;
+        int get_width() const;
+        int get_height() const;
 
-    double get_projected_x() const;
-    double get_projected_y() const;
-};
+        double get_projected_x() const;
+        double get_projected_y() const;
+    };
 
-class GrassBlock : public Entity {
-public:
-    GrassBlock(int x, int y, int width, int height);
+    class GrassBlock : public Entity {
+    public:
+        GrassBlock(int x, int y, int width, int height);
 
-    Block_type get_type() const override;
+        Block_type get_type() const override;
 
-    Hitbox get_hitbox() const override;
+        Game_logic::Hitbox get_hitbox() const override;
 
-};
+    };
 
-class DirtBlock : public Entity {
-public:
-    DirtBlock(int x, int y, int width, int height);
+    class DirtBlock : public Entity {
+    public:
+        DirtBlock(int x, int y, int width, int height);
 
-    Block_type get_type() const override;
+        Block_type get_type() const override;
 
-    Hitbox get_hitbox() const override;
-};
+        Game_logic::Hitbox get_hitbox() const override;
+    };
+
+}
 
 #endif //MEAT_BOY_ENTITY_H

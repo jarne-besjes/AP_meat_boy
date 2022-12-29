@@ -9,24 +9,27 @@
 #include "../Camera.h"
 #include "Blocks/Finish.h"
 
-class Entity;
+namespace Game_logic {
+    class Entity;
 
-class World {
+    class World {
 
-    Player player;
+        Player player;
 
-    Finish finish;
+        Finish finish;
 
-    std::vector<std::shared_ptr<Entity>> entities;
+        std::vector<std::shared_ptr<Entity>> entities;
 
-public:
-    World();
+    public:
+        World();
 
-    int load_level(const std::string& level_name, bool &moving_camera); // returns the level y size for the initialization of the camera
-    Player &get_player();
+        int load_level(const std::string& level_name, bool &moving_camera); // returns the level y size for the initialization of the camera
+        Player &get_player();
 
-    std::vector<std::shared_ptr<Entity>> &get_entities();
-};
+        std::vector<std::shared_ptr<Entity>> &get_entities();
+    };
+
+}
 
 
 #endif //MEAT_BOY_WORLD_H

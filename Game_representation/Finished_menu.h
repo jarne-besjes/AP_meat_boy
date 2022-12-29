@@ -8,18 +8,20 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 
-class Finished_menu {
-    sf::Font main_font;
+namespace Game_representation {
 
-    //sf::View view;
+    class Finished_menu {
+        sf::Font main_font;
 
-public:
-    Finished_menu();
+        //sf::View view;
 
-    std::unique_ptr<sf::RenderWindow> draw(std::unique_ptr<sf::RenderWindow> window);
+    public:
+        Finished_menu();
 
-    bool update(); // if bool == true, the enter key has been pressed, so we need to go to the main menu
-};
+        std::unique_ptr<sf::RenderWindow> draw(std::unique_ptr<sf::RenderWindow> window);
 
+        bool update(); // if bool == true, the enter key has been pressed, so we need to go to the main menu
+    };
+}
 
 #endif //MEAT_BOY_FINISHED_MENU_H

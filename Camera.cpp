@@ -82,7 +82,7 @@ Camera::Camera() {
     y = 0;
 }
 
-void Camera::get_visible_entities(std::vector<std::shared_ptr<Entity>> &entities) const {
+void Camera::get_visible_entities(std::vector<std::shared_ptr<Game_logic::Entity>> &entities) const {
     for (auto &entity : entities) {
         if (entity->get_y() > bottom_y - 50 && entity->get_y() < top_y + 50) {
             entity->visible = true;
@@ -90,13 +90,13 @@ void Camera::get_visible_entities(std::vector<std::shared_ptr<Entity>> &entities
     }
 }
 
-void Camera::clear_visible_entities(std::vector<std::shared_ptr<Entity>> &entities) {
+void Camera::clear_visible_entities(std::vector<std::shared_ptr<Game_logic::Entity>> &entities) {
     for (auto &entity : entities) {
         entity->visible = false;
     }
 }
 
-void Camera::project_entities(std::vector<std::shared_ptr<Entity>> &entities) {
+void Camera::project_entities(std::vector<std::shared_ptr<Game_logic::Entity>> &entities) {
     for (auto &entity : entities) {
         if (entity->visible) {
             entity->projected_x = entity->get_x();
@@ -105,8 +105,8 @@ void Camera::project_entities(std::vector<std::shared_ptr<Entity>> &entities) {
     }
 }
 
-void Camera::project_player(Player &player) {
-    Position playerpos = player.get_position();
+void Camera::project_player(Game_logic::Player &player) {
+    Game_logic::Position playerpos = player.get_position();
     player.projected_x = playerpos.x;
     player.projected_y = WINDOW_HEIGHT - (top_y - playerpos.y);
 }

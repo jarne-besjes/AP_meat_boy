@@ -6,16 +6,19 @@
 #define MEAT_BOY_FINISH_H
 #include "Entity.h"
 
-class Finish : public Entity{
-public:
+namespace Game_logic {
 
-    Finish(int x, int y, int width, int height);
+    class Finish : public Entity{
+    public:
 
-    Block_type get_type() const override;
+        Finish(int x, int y, int width, int height);
 
-    Hitbox get_hitbox() const override;
+        Block_type get_type() const override;
 
-};
+        Game_logic::Hitbox get_hitbox() const override;
+
+    };
+}
 
 
 #endif //MEAT_BOY_FINISH_H

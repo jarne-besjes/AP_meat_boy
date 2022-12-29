@@ -5,7 +5,7 @@
 #include "Stopwatch.h"
 int main()
 {
-    std::shared_ptr<Game> game = std::make_shared<Game>();
+    std::shared_ptr<Game_representation::Game> game = std::make_shared<Game_representation::Game>();
     game->add_game_to_player_observer();
     game->loop();
     return 0;

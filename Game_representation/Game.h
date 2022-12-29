@@ -13,45 +13,49 @@
 #include "State.h"
 #include "../Camera.h"
 
-class Game : public IObserver, public std::enable_shared_from_this<Game> {
+namespace Game_representation {
 
- //   Stopwatch &stopwatch = Stopwatch::getInstance();
+    class Game : public IObserver, public std::enable_shared_from_this<Game> {
 
-    Camera camera;
+        //   Stopwatch &stopwatch = Stopwatch::getInstance();
 
-    View view;
+        Camera camera;
 
-    State_manager state_manager;
+        View view;
 
-    World world;
-    sf::Font main_font;
+        State_manager state_manager;
 
-    std::unique_ptr<sf::RenderWindow> window;
+        Game_logic::World world;
+        sf::Font main_font;
 
-    std::string current_level;
+        std::unique_ptr<sf::RenderWindow> window;
 
-    bool moving_camera;
+        std::string current_level;
 
-public:
+        bool moving_camera;
 
-    void add_game_to_player_observer();
+    public:
 
-    void update() override;
+        void add_game_to_player_observer();
 
-    Game();
+        void update() override;
 
-    void display_level();
+        Game();
 
-    World &get_world();
+        void display_level();
 
-    void loop();
+        Game_logic::World &get_world();
 
-    void play_button_pressed();
+        void loop();
 
-    Camera &get_camera();
+        void play_button_pressed();
 
-    ~Game();
-};
+        Camera &get_camera();
+
+        ~Game();
+    };
+
+}
 
 
 #endif //PLOTTER_GAME_H

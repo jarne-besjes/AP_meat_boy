@@ -41,13 +41,13 @@ public:
 
     void move_up(int amount);
 
-    void get_visible_entities(std::vector<std::shared_ptr<Entity>> &entities) const;
+    void get_visible_entities(std::vector<std::shared_ptr<Game_logic::Entity>> &entities) const;
 
-    static void clear_visible_entities(std::vector<std::shared_ptr<Entity>> &entities);
+    static void clear_visible_entities(std::vector<std::shared_ptr<Game_logic::Entity>> &entities);
 
-    void project_entities(std::vector<std::shared_ptr<Entity>> &entities);
+    void project_entities(std::vector<std::shared_ptr<Game_logic::Entity>> &entities);
 
-    void project_player(Player &player);
+    void project_player(Game_logic::Player &player);
 };
 
 

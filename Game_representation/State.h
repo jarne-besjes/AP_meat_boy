@@ -5,22 +5,26 @@
 #ifndef MEAT_BOY_STATE_H
 #define MEAT_BOY_STATE_H
 
-enum class Game_state {
-    MENU,
-    GAME,
-    LEVEL_CHOICE,
-    FINISHED
-};
+namespace Game_representation {
 
-class State_manager {
-    Game_state current_state;
-public:
-    State_manager();
+    enum class Game_state {
+        MENU,
+        GAME,
+        LEVEL_CHOICE,
+        FINISHED
+    };
 
-    Game_state get_state() const;
+    class State_manager {
+        Game_state current_state;
+    public:
+        State_manager();
 
-    void set_state(Game_state state);
-};
+        Game_state get_state() const;
+
+        void set_state(Game_state state);
+    };
+
+}
 
 
 #endif //MEAT_BOY_STATE_H
