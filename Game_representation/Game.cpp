@@ -10,7 +10,7 @@
 #include "../Values.cpp"
 #include <fstream>
 
-static int FRAME_TIME = 16;
+static double FRAME_TIME = 0.016;
 
 namespace Game_representation {
 
@@ -36,7 +36,11 @@ namespace Game_representation {
         bool up = false;
         bool down = false;
 
+        Stopwatch *stopwatch = Stopwatch::getInstance();
+
         while (window->isOpen()) {
+            if (stopwatch->elapsed() <= FRAME_TIME) continue; // we are allow to use busy waiting to cap the framerate
+
             Game_state game_state = state_manager.get_state();
 
             sf::Event event;
@@ -117,6 +121,7 @@ namespace Game_representation {
                 }
             }
             window->display();
+            Stopwatch::getInstance()->next_frame();
         }
     }
 

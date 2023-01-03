@@ -55,7 +55,6 @@ namespace Game_representation {
 
         window->draw(meat_boy_sprite);
 
-
         return window;
     }
 

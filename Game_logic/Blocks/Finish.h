@@ -12,11 +12,11 @@ namespace Game_logic {
     public:
 
         Finish(int x, int y, int width, int height);
+        ~Finish() override = default;
 
         Block_type get_type() const override;
 
         Game_logic::Hitbox get_hitbox() const override;
-
     };
 }
 

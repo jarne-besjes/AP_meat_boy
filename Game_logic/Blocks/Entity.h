@@ -21,10 +21,10 @@ namespace Game_logic {
 
     class Entity {
     protected:
-        int x;
-        int y;
-        int width;
-        int height;
+        double x;
+        double y;
+        double width;
+        double height;
 
         Block_type block_type;
     public:
@@ -35,6 +35,7 @@ namespace Game_logic {
         double projected_y = 0;
 
         Entity(int x, int y, int width, int height);
+        virtual ~Entity() = default;
 
         virtual Block_type get_type() const = 0;
 
@@ -55,20 +56,22 @@ namespace Game_logic {
     class GrassBlock : public Entity {
     public:
         GrassBlock(int x, int y, int width, int height);
+        ~GrassBlock() override = default;
 
         Block_type get_type() const override;
 
         Game_logic::Hitbox get_hitbox() const override;
-
     };
 
     class DirtBlock : public Entity {
     public:
         DirtBlock(int x, int y, int width, int height);
+        ~DirtBlock() override = default;
 
         Block_type get_type() const override;
 
         Game_logic::Hitbox get_hitbox() const override;
+
     };
 
 }

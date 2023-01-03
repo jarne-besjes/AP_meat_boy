@@ -7,7 +7,7 @@
 #include <iostream>
 #include "Hitbox.h"
 #include "../Values.cpp"
-
+#include "../Stopwatch.h"
 
 namespace Game_logic {
 
@@ -22,17 +22,21 @@ namespace Game_logic {
  */
     void Player::update(bool left, bool right, bool down, bool up, std::vector<std::shared_ptr<Entity>> &entities) {
 
+        double elapsed_time = Stopwatch::getInstance()->elapsed();
+
         if (up) {
             if (on_ground) {
                 velocity_y = -JUMP_ACCEL;
                 on_ground = false;
             } else if (against_wall) {
                 velocity_y = -JUMP_ACCEL;
-                velocity_x = against_wall_left ? PLAYER_ACCELERATION * 300 : -PLAYER_ACCELERATION * 300;
+                velocity_x = against_wall_left ? PLAYER_ACCELERATION * 15 : -PLAYER_ACCELERATION * 15;
                 against_wall = false;
             }
         }
 
+        std::cout << "on ground:" << std::boolalpha << on_ground << std::endl;
+        std::cout << "against wall" << std::boolalpha << against_wall << std::endl;
         if (!on_ground) {
             if (!against_wall) {
                 velocity_y += GRAVITY;
@@ -67,8 +71,12 @@ namespace Game_logic {
         }
 
 
-        position_x += velocity_x;
-        position_y += velocity_y;
+        position_x += velocity_x * elapsed_time * global_time_scale;
+        position_y += velocity_y * elapsed_time * global_time_scale;
+
+        std::cout << "velocity_x: " << velocity_x << std::endl;
+        std::cout << "velocity_y: " << velocity_y << std::endl;
+        std::cout << "elapsed time:" << elapsed_time << std::endl;
 
         // check hitboxes
         bool collided = false;

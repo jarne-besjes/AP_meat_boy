@@ -10,23 +10,33 @@
  * 
  * @return Stopwatch& : the instance that's returned
  */
-Stopwatch &Stopwatch::getInstance() {
+Stopwatch *Stopwatch::getInstance() {
     static Stopwatch instance;
-    return instance;
+    return &instance;
 }
 
 /**
  * @brief Starts the stopwatch
  */
 void Stopwatch::start() {
-    current = std::chrono::system_clock::now();
+    previous = std::chrono::system_clock::now();
+    running = true;
 }
 
-/**
- * @brief Stops the stopwatch and saves the time difference
- */
-void Stopwatch::stop() {
+double Stopwatch::elapsed() {
+    if (!running) {
+        throw std::runtime_error("Stopwatch is not running");
+    }
+    current = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_seconds = current - previous;
+    return elapsed_seconds.count();
+}
+
+void Stopwatch::next_frame() {
+    if (!running) {
+        throw std::runtime_error("Stopwatch is not running");
+    }
+    current = std::chrono::system_clock::now();
     previous = current;
     current = std::chrono::system_clock::now();
-    diff = std::chrono::duration_cast<std::chrono::milliseconds>(current - previous).count();
 }

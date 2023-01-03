@@ -18,12 +18,11 @@ public:
     std::chrono::system_clock::time_point previous;
     std::chrono::system_clock::time_point current;
 
-    double diff = 0;
-
-    static Stopwatch &getInstance();
+    static Stopwatch *getInstance();
 
     void start();
-    void stop();
+    double elapsed();
+    void next_frame();
 };
 
 
