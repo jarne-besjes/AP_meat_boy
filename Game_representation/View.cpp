@@ -71,17 +71,26 @@ namespace Game_representation {
         sf::Texture dirt_texture;
         sf::Texture grass_texture;
         sf::Texture finish_texture;
+        sf::Texture saw_texture_1;
+        sf::Texture saw_texture_2;
+
         // TODO: try catch
         dirt_texture.loadFromFile("Game_representation/assets/textures/tex_dirt.jpg");
         grass_texture.loadFromFile("Game_representation/assets/textures/tex_grass.jpg");
         finish_texture.loadFromFile("Game_representation/assets/textures/finish.png");
+        saw_texture_1.loadFromFile("Game_representation/assets/textures/sawBlade1.png");
+        saw_texture_2.loadFromFile("Game_representation/assets/textures/sawBlade2.png");
 
         sf::Sprite dirt_sprite(dirt_texture);
         sf::Sprite grass_sprite(grass_texture);
         sf::Sprite finish_sprite(finish_texture);
+        sf::Sprite saw_sprite_1(saw_texture_1);
+        sf::Sprite saw_sprite_2(saw_texture_2);
         dirt_sprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
         grass_sprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
         finish_sprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
+        saw_sprite_1.setTextureRect(sf::IntRect(0, 0, 50, 50));
+        saw_sprite_2.setTextureRect(sf::IntRect(0, 0, 50 ,50));
 
 
         for (auto &entity : entities) {
@@ -98,6 +107,15 @@ namespace Game_representation {
             } else if (entity->get_type() == Game_logic::Block_type::FINISH) {
                 finish_sprite.setPosition(pos_x, pos_y);
                 window->draw(finish_sprite);
+            } else if (entity->get_type() == Game_logic::Block_type::SAW) {
+                static int counter = 0;
+                if ((++counter)%30 <= 15) {
+                    saw_sprite_1.setPosition(pos_x, pos_y);
+                    window->draw(saw_sprite_1);
+                } else {
+                    saw_sprite_2.setPosition(pos_x, pos_y);
+                    window->draw(saw_sprite_2);
+                }
             }
         }
 

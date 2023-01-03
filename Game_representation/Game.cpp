@@ -96,6 +96,9 @@ namespace Game_representation {
                     // TODO
                     std::cout << "You won!" << std::endl;
                     state_manager.set_state(Game_state::FINISHED);
+                } else if(world.get_player().collides_with_deadly_object()) {
+                    // TODO: die
+                    state_manager.set_state(Game_state::MENU);
                 }
             } else if (game_state == Game_state::LEVEL_CHOICE) {
                 std::string level;
@@ -108,7 +111,6 @@ namespace Game_representation {
                 }
                 window = view.draw_level_choice(std::move(window), levels, level);
                 if (!level.empty()) {
-                    std::cout << level << std::endl;
                     int level_size = world.load_level(level, moving_camera);
                     camera.set_level_size(level_size);
                     state_manager.set_state(Game_state::GAME);

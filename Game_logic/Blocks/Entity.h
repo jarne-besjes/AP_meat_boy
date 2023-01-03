@@ -16,7 +16,8 @@ namespace Game_logic {
     enum class Block_type {
         GRASS,
         DIRT,
-        FINISH
+        FINISH,
+        SAW
     };
 
     class Entity {
@@ -72,6 +73,16 @@ namespace Game_logic {
 
         Game_logic::Hitbox get_hitbox() const override;
 
+    };
+
+    class SawBlade : public Entity {
+    public:
+        SawBlade(int x, int y, int width, int height);
+        ~SawBlade() override = default;
+
+        Block_type get_type() const override;
+
+        Game_logic::Hitbox get_hitbox() const override;
     };
 
 }

@@ -42,6 +42,7 @@ namespace Game_logic {
         std::shared_ptr<Entity_factory> dirt_factory = std::make_shared<Dirt_factory>();
         std::shared_ptr<Entity_factory> grass_factory = std::make_shared<Grass_factory>();
         std::shared_ptr<Entity_factory> finish_factory = std::make_shared<Finish_factory>();
+        std::shared_ptr<Entity_factory> saw_factory = std::make_shared<Saw_factory>();
 
         json j;
         const std::string &level_loc = level_name;
@@ -66,6 +67,8 @@ namespace Game_logic {
                 } else if (level[y][x] == 'f') {
                     entities.push_back(create_entity(finish_factory, x * 50, y * 50, 50, 50));
                     finish_set = true;
+                } else if (level[y][x] == 's') {
+                    entities.push_back(create_entity(saw_factory, x * 50, y * 50, 50, 50));
                 }
             }
         }

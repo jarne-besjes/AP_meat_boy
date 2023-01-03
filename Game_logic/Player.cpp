@@ -35,8 +35,6 @@ namespace Game_logic {
             }
         }
 
-        std::cout << "on ground:" << std::boolalpha << on_ground << std::endl;
-        std::cout << "against wall" << std::boolalpha << against_wall << std::endl;
         if (!on_ground) {
             if (!against_wall) {
                 velocity_y += GRAVITY;
@@ -74,17 +72,16 @@ namespace Game_logic {
         position_x += velocity_x * elapsed_time * global_time_scale;
         position_y += velocity_y * elapsed_time * global_time_scale;
 
-        std::cout << "velocity_x: " << velocity_x << std::endl;
-        std::cout << "velocity_y: " << velocity_y << std::endl;
-        std::cout << "elapsed time:" << elapsed_time << std::endl;
-
         // check hitboxes
         bool collided = false;
         for(auto &entity : entities) {
             if (this->get_hitbox().collides(entity->get_hitbox())) {
                 if (entity->get_type() == Block_type::FINISH) {
                     collided_with_finish = true;
-                } else {
+                } else if (entity->get_type() == Block_type::SAW) {
+                    collided_with_deadly_object = true;
+                }
+                else {
                     collided = true;
                     double shortest_x;
                     double shortest_y;

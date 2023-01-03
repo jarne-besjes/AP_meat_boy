@@ -132,4 +132,15 @@ namespace Game_logic {
         return {x, y, width, height};
     }
 
+    SawBlade::SawBlade(int x, int y, int width, int height) : Entity(x, y, width, height) {
+        block_type = Block_type::SAW;
+    }
+
+    Block_type SawBlade::get_type() const {
+        return block_type;
+    }
+
+    Game_logic::Hitbox SawBlade::get_hitbox() const {
+        return {x, y, width, height};
+    }
 }

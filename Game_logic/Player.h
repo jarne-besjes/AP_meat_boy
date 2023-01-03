@@ -29,6 +29,8 @@ namespace Game_logic {
 
         bool collided_with_finish = false;
 
+        bool collided_with_deadly_object = false;
+
     public:
         Player();
 
@@ -44,6 +46,10 @@ namespace Game_logic {
 
         bool collides_with_finish() const {
             return collided_with_finish;
+        }
+
+        bool collides_with_deadly_object() const {
+            return collided_with_deadly_object;
         }
 
         Hitbox get_hitbox();
