@@ -36,6 +36,7 @@ namespace Game_logic {
         double projected_y = 0;
 
         Entity(int x, int y, int width, int height);
+
         virtual ~Entity() = default;
 
         virtual Block_type get_type() const = 0;
@@ -46,17 +47,22 @@ namespace Game_logic {
 
 
         int get_x() const;
+
         int get_y() const;
+
         int get_width() const;
+
         int get_height() const;
 
         double get_projected_x() const;
+
         double get_projected_y() const;
     };
 
     class GrassBlock : public Entity {
     public:
         GrassBlock(int x, int y, int width, int height);
+
         ~GrassBlock() override = default;
 
         Block_type get_type() const override;
@@ -67,6 +73,7 @@ namespace Game_logic {
     class DirtBlock : public Entity {
     public:
         DirtBlock(int x, int y, int width, int height);
+
         ~DirtBlock() override = default;
 
         Block_type get_type() const override;
@@ -78,6 +85,7 @@ namespace Game_logic {
     class SawBlade : public Entity {
     public:
         SawBlade(int x, int y, int width, int height);
+
         ~SawBlade() override = default;
 
         Block_type get_type() const override;

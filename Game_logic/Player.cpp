@@ -74,14 +74,13 @@ namespace Game_logic {
 
         // check hitboxes
         bool collided = false;
-        for(auto &entity : entities) {
+        for (auto &entity: entities) {
             if (this->get_hitbox().collides(entity->get_hitbox())) {
                 if (entity->get_type() == Block_type::FINISH) {
                     collided_with_finish = true;
                 } else if (entity->get_type() == Block_type::SAW) {
                     collided_with_deadly_object = true;
-                }
-                else {
+                } else {
                     collided = true;
                     double shortest_x;
                     double shortest_y;

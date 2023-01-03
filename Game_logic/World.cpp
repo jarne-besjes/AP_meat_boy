@@ -23,7 +23,8 @@ namespace Game_logic {
  *
  * @return std::shared_ptr<Entity> : the created entity
  */
-    std::shared_ptr<Entity> create_entity(std::shared_ptr<Entity_factory> &factory, int x, int y, int width, int height) {
+    std::shared_ptr<Entity>
+    create_entity(std::shared_ptr<Entity_factory> &factory, int x, int y, int width, int height) {
         return factory->create_entity(x, y, width, height);
     }
 
@@ -35,7 +36,7 @@ namespace Game_logic {
  *
  * @return int : level_size
  */
-    int World::load_level(const std::string& level_name, bool &moving_camera) {
+    int World::load_level(const std::string &level_name, bool &moving_camera) {
         entities.clear();
         player.reset();
         // factories
@@ -61,7 +62,7 @@ namespace Game_logic {
                     entities.push_back(create_entity(grass_factory, x * 50, y * 50, 50, 50));
                 } else if (level[y][x] == 'd') {
                     entities.push_back(create_entity(dirt_factory, x * 50, y * 50, 50, 50));
-                } else if(level[y][x] == 'p') {
+                } else if (level[y][x] == 'p') {
                     player.set_position(x * 50, y * 50);
                     player_set = true;
                 } else if (level[y][x] == 'f') {
@@ -101,7 +102,7 @@ namespace Game_logic {
  * @brief Construct a new World:: World object
  *
  */
-    World::World(): finish(0,0,50, 50) {
+    World::World() : finish(0, 0, 50, 50) {
 
     }
 

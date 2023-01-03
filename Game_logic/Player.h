@@ -18,7 +18,7 @@ namespace Game_logic {
         double y;
     };
 
-    class Player : public IObservable{
+    class Player : public IObservable {
         double position_x, position_y;
         double velocity_x, velocity_y;
 

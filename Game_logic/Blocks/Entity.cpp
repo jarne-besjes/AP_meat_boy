@@ -15,7 +15,7 @@ namespace Game_logic {
  * @param width : width of the entity
  * @param height : height of the entity
  */
-    Entity::Entity(int x, int y, int width, int height): x(x), y(y), width(width), height(height) {}
+    Entity::Entity(int x, int y, int width, int height) : x(x), y(y), width(width), height(height) {}
 
 /**
  * @brief return the x coordinate of the entity
@@ -99,7 +99,7 @@ namespace Game_logic {
  * @return Hitbox : hitbox of the grass block
  */
     Game_logic::Hitbox GrassBlock::get_hitbox() const {
-        return {x,y, width, height};
+        return {x, y, width, height};
     }
 
 /**

@@ -54,8 +54,7 @@ namespace Game_representation {
  */
     std::unique_ptr<sf::RenderWindow>
     Level_selection::update(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels,
-                            std::string &level)
-    {
+                            std::string &level) {
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
         const int nr_of_levels = levels.size();

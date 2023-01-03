@@ -19,7 +19,9 @@ class IObservable {
 
 public:
     virtual void remove_observer(std::shared_ptr<IObserver> observer);
+
     virtual void notify_observers();
+
     virtual void register_observer(std::shared_ptr<IObserver> observer);
 
     virtual ~IObservable() = default;

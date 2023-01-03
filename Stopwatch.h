@@ -10,9 +10,12 @@
 // This is a singleton class
 class Stopwatch {
     bool running = false;
+
     Stopwatch() = default;
+
 public:
     Stopwatch &operator=(const Stopwatch &) = delete;
+
     Stopwatch(const Stopwatch &) = delete;
 
     std::chrono::system_clock::time_point previous;
@@ -21,7 +24,9 @@ public:
     static Stopwatch *getInstance();
 
     void start();
+
     double elapsed();
+
     void next_frame();
 };
 

@@ -4,6 +4,7 @@
 
 #ifndef MEAT_BOY_VIEW_H
 #define MEAT_BOY_VIEW_H
+
 #include <memory>
 #include "SFML/Graphics.hpp"
 #include "Main_menu.h"
@@ -39,12 +40,15 @@ namespace Game_representation {
 
         std::unique_ptr<sf::RenderWindow> draw_level(std::unique_ptr<sf::RenderWindow> window);
 
-        static std::unique_ptr<sf::RenderWindow> draw_entities(std::unique_ptr<sf::RenderWindow> window, std::vector<std::shared_ptr<Game_logic::Entity>> &entities);
+        static std::unique_ptr<sf::RenderWindow> draw_entities(std::unique_ptr<sf::RenderWindow> window,
+                                                               std::vector<std::shared_ptr<Game_logic::Entity>> &entities);
 
         std::unique_ptr<sf::RenderWindow>
-        draw_level_choice(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels, std::string &level);
+        draw_level_choice(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels,
+                          std::string &level);
 
-        std::unique_ptr<sf::RenderWindow> draw_finished(std::unique_ptr<sf::RenderWindow> window, bool &enter_has_been_pressed);
+        std::unique_ptr<sf::RenderWindow>
+        draw_finished(std::unique_ptr<sf::RenderWindow> window, bool &enter_has_been_pressed);
     };
 
 }

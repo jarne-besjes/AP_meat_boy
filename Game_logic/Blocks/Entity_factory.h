@@ -4,6 +4,7 @@
 
 #ifndef MEAT_BOY_ENTITY_FACTORY_H
 #define MEAT_BOY_ENTITY_FACTORY_H
+
 #include <memory>
 
 namespace Game_logic {

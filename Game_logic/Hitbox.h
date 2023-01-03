@@ -24,14 +24,20 @@ namespace Game_logic {
         bool collides(const Hitbox &other) const;
 
         double get_top() const;
+
         double get_bottom() const;
+
         double get_left() const;
+
         double get_right() const;
 
         // functions to check collisions: check if THIS OBJECT COLLIDES with the ... side of the other object
         bool collides_left_side(const Hitbox &other) const;
+
         bool collides_right_side(const Hitbox &other) const;
+
         bool collides_top_side(const Hitbox &other) const;
+
         bool collides_bottom_side(const Hitbox &other) const;
 
     };

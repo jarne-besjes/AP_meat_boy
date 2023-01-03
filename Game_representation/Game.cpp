@@ -18,7 +18,7 @@ namespace Game_representation {
  * @brief Construct a new Game:: Game object
  *
  */
-    Game::Game() : view(*this){
+    Game::Game() : view(*this) {
 
         window = std::make_unique<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Meat boy!");
 
@@ -86,7 +86,7 @@ namespace Game_representation {
                 if (moving_camera) {
                     if (world.get_player().get_position().y < camera.get_y()) {
                         camera.move_up(std::abs(world.get_player().get_position().y - camera.get_y()));
-                    } else if (world.get_player().get_position().y > camera.get_y() + WINDOW_HEIGHT/2) {
+                    } else if (world.get_player().get_position().y > camera.get_y() + WINDOW_HEIGHT / 2) {
                         // TODO: die
                         state_manager.set_state(Game_state::MENU);
                     }
@@ -96,7 +96,7 @@ namespace Game_representation {
                     // TODO
                     std::cout << "You won!" << std::endl;
                     state_manager.set_state(Game_state::FINISHED);
-                } else if(world.get_player().collides_with_deadly_object()) {
+                } else if (world.get_player().collides_with_deadly_object()) {
                     // TODO: die
                     state_manager.set_state(Game_state::MENU);
                 }
@@ -104,7 +104,7 @@ namespace Game_representation {
                 std::string level;
                 std::string path = "assets/levels";
                 std::vector<std::string> levels;
-                for (const auto &entry : std::filesystem::directory_iterator(path)) {
+                for (const auto &entry: std::filesystem::directory_iterator(path)) {
                     if (entry.path().extension() == ".json") {
                         levels.push_back(entry.path().string());
                     }

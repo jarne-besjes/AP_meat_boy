@@ -4,6 +4,7 @@
 
 #ifndef MEAT_BOY_LEVEL_SELECTION_H
 #define MEAT_BOY_LEVEL_SELECTION_H
+
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -23,7 +24,8 @@ namespace Game_representation {
         std::unique_ptr<sf::RenderWindow>
         draw(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels);
 
-        std::unique_ptr<sf::RenderWindow> update(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels, std::string &level);
+        std::unique_ptr<sf::RenderWindow>
+        update(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels, std::string &level);
     };
 }
 

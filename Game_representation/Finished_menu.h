@@ -12,9 +12,6 @@ namespace Game_representation {
 
     class Finished_menu {
         sf::Font main_font;
-
-        //sf::View view;
-
     public:
         Finished_menu();
 

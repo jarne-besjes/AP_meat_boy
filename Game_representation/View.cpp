@@ -24,12 +24,13 @@ namespace Game_representation {
 
         return window;
     }
+
 /**
  * @brief Construct a new View:: View object
  *
  * @param game : the game object
  */
-    View::View(Game &game): game(game), menu(game) {
+    View::View(Game &game) : game(game), menu(game) {
         main_font.loadFromFile("Game_representation/assets/Freshman-POdx.ttf");
     }
 
@@ -67,7 +68,8 @@ namespace Game_representation {
  * @return std::unique_ptr<sf::RenderWindow> : the window
  */
     std::unique_ptr<sf::RenderWindow>
-    View::draw_entities(std::unique_ptr<sf::RenderWindow> window, std::vector<std::shared_ptr<Game_logic::Entity>> &entities) {
+    View::draw_entities(std::unique_ptr<sf::RenderWindow> window,
+                        std::vector<std::shared_ptr<Game_logic::Entity>> &entities) {
         sf::Texture dirt_texture;
         sf::Texture grass_texture;
         sf::Texture finish_texture;
@@ -90,10 +92,10 @@ namespace Game_representation {
         grass_sprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
         finish_sprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
         saw_sprite_1.setTextureRect(sf::IntRect(0, 0, 50, 50));
-        saw_sprite_2.setTextureRect(sf::IntRect(0, 0, 50 ,50));
+        saw_sprite_2.setTextureRect(sf::IntRect(0, 0, 50, 50));
 
 
-        for (auto &entity : entities) {
+        for (auto &entity: entities) {
 
             if (!entity->visible) continue; // only draw the visible objects
             int pos_x = entity->get_projected_x();
@@ -109,7 +111,7 @@ namespace Game_representation {
                 window->draw(finish_sprite);
             } else if (entity->get_type() == Game_logic::Block_type::SAW) {
                 static int counter = 0;
-                if ((++counter)%30 <= 15) {
+                if ((++counter) % 30 <= 15) {
                     saw_sprite_1.setPosition(pos_x, pos_y);
                     window->draw(saw_sprite_1);
                 } else {
@@ -133,7 +135,8 @@ namespace Game_representation {
  * @return std::unique_ptr<sf::RenderWindow> : the window
  */
     std::unique_ptr<sf::RenderWindow>
-    View::draw_level_choice(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels, std::string &level) {
+    View::draw_level_choice(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels,
+                            std::string &level) {
         window = selection.draw(std::move(window), levels);
         window = selection.update(std::move(window), levels, level);
 
@@ -148,7 +151,8 @@ namespace Game_representation {
  *
  * @return std::unique_ptr<sf::RenderWindow> : the window
  */
-    std::unique_ptr<sf::RenderWindow> View::draw_finished(std::unique_ptr<sf::RenderWindow> window, bool &enter_has_been_pressed) {
+    std::unique_ptr<sf::RenderWindow>
+    View::draw_finished(std::unique_ptr<sf::RenderWindow> window, bool &enter_has_been_pressed) {
         window = finished_menu.draw(std::move(window));
         enter_has_been_pressed = finished_menu.update();
 

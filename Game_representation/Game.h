@@ -4,6 +4,7 @@
 
 #ifndef PLOTTER_GAME_H
 #define PLOTTER_GAME_H
+
 #include "SFML/Graphics.hpp"
 #include "View.h"
 #include <memory>

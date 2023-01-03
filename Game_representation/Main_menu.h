@@ -4,6 +4,7 @@
 
 #ifndef MEAT_BOY_MAIN_MENU_H
 #define MEAT_BOY_MAIN_MENU_H
+
 #include "SFML/Graphics.hpp"
 #include <memory>
 

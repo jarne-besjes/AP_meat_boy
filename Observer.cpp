@@ -3,6 +3,7 @@
 //
 
 #include "Observer.h"
+
 /**
  * @brief Registers an observer to the observable subject
  * 
@@ -30,7 +31,7 @@ void IObservable::remove_observer(std::shared_ptr<IObserver> observer) {
  * @brief Notifies all observers of the observable subject
  */
 void IObservable::notify_observers() {
-    for (auto &observer : observers) {
+    for (auto &observer: observers) {
         observer->update();
     }
 }
