@@ -194,6 +194,12 @@ namespace Game_logic {
         velocity_y = 0;
         collided_with_finish = false;
         on_ground = false;
+        collided_teleporter = nullptr;
+        teleporter_counter_active = false;
+        teleporter_counter = 0;
+        against_wall = false;
+        against_wall_left = false;
+        collided_with_deadly_object = false;
     }
 
     Position Player::get_projected_position() {
