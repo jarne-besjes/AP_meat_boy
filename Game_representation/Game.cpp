@@ -91,6 +91,7 @@ namespace Game_representation {
                         state_manager.set_state(Game_state::MENU);
                     }
                 }
+                Game_logic::Entity *teleporter = world.get_player().collides_with_teleporter();
 
                 if (world.get_player().collides_with_finish()) {
                     // TODO
@@ -99,6 +100,8 @@ namespace Game_representation {
                 } else if (world.get_player().collides_with_deadly_object()) {
                     // TODO: die
                     state_manager.set_state(Game_state::MENU);
+                } else if (teleporter) {
+                    world.get_player().set_position(teleporter->get_x(), teleporter->get_y() - 50);
                 }
             } else if (game_state == Game_state::LEVEL_CHOICE) {
                 std::string level;

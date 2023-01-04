@@ -75,24 +75,37 @@ namespace Game_representation {
         sf::Texture finish_texture;
         sf::Texture saw_texture_1;
         sf::Texture saw_texture_2;
+        sf::Texture teleporter_texture1;
+        sf::Texture teleporter_texture2;
+        sf::Texture teleporter_texture3;
 
-        // TODO: try catch
+        // TODO: try catch and do this in constructor
         dirt_texture.loadFromFile("Game_representation/assets/textures/tex_dirt.jpg");
         grass_texture.loadFromFile("Game_representation/assets/textures/tex_grass.jpg");
         finish_texture.loadFromFile("Game_representation/assets/textures/finish.png");
         saw_texture_1.loadFromFile("Game_representation/assets/textures/sawBlade1.png");
         saw_texture_2.loadFromFile("Game_representation/assets/textures/sawBlade2.png");
+        teleporter_texture1.loadFromFile("Game_representation/assets/textures/teleporter1.png");
+        teleporter_texture2.loadFromFile("Game_representation/assets/textures/teleporter2.png");
+        teleporter_texture3.loadFromFile("Game_representation/assets/textures/teleporter3.png");
 
         sf::Sprite dirt_sprite(dirt_texture);
         sf::Sprite grass_sprite(grass_texture);
         sf::Sprite finish_sprite(finish_texture);
         sf::Sprite saw_sprite_1(saw_texture_1);
         sf::Sprite saw_sprite_2(saw_texture_2);
+        sf::Sprite teleporter_sprite1(teleporter_texture1);
+        sf::Sprite teleporter_sprite2(teleporter_texture2);
+        sf::Sprite teleporter_sprite3(teleporter_texture3);
         dirt_sprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
         grass_sprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
         finish_sprite.setTextureRect(sf::IntRect(0, 0, 50, 50));
         saw_sprite_1.setTextureRect(sf::IntRect(0, 0, 50, 50));
         saw_sprite_2.setTextureRect(sf::IntRect(0, 0, 50, 50));
+        teleporter_sprite1.setTextureRect(sf::IntRect(0, 0, 50, 50));
+        teleporter_sprite2.setTextureRect(sf::IntRect(0, 0, 50, 50));
+        teleporter_sprite3.setTextureRect(sf::IntRect(0, 0, 50, 50));
+
 
 
         for (auto &entity: entities) {
@@ -110,13 +123,27 @@ namespace Game_representation {
                 finish_sprite.setPosition(pos_x, pos_y);
                 window->draw(finish_sprite);
             } else if (entity->get_type() == Game_logic::Block_type::SAW) {
-                static int counter = 0;
-                if ((++counter) % 30 <= 15) {
+                static int saw_counter = 0;
+                if ((++saw_counter) % 30 <= 15) {
+                    if (saw_counter == 30) saw_counter = 0;
                     saw_sprite_1.setPosition(pos_x, pos_y);
                     window->draw(saw_sprite_1);
                 } else {
                     saw_sprite_2.setPosition(pos_x, pos_y);
                     window->draw(saw_sprite_2);
+                }
+            } else if (entity->get_type() == Game_logic::Block_type::TELEPORTER) {
+                static int teleporter_counter = 0;
+                if ((++teleporter_counter) % 30 <= 10) {
+                    if (teleporter_counter == 30) teleporter_counter = 0;
+                    teleporter_sprite1.setPosition(pos_x, pos_y);
+                    window->draw(teleporter_sprite1);
+                } else if ((teleporter_counter) % 30 <= 20) {
+                    teleporter_sprite2.setPosition(pos_x, pos_y);
+                    window->draw(teleporter_sprite2);
+                } else {
+                    teleporter_sprite3.setPosition(pos_x, pos_y);
+                    window->draw(teleporter_sprite3);
                 }
             }
         }

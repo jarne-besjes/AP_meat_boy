@@ -59,4 +59,8 @@ namespace Game_logic {
     std::unique_ptr<Entity> Saw_factory::create_entity(int x, int y, int width, int height) {
         return std::make_unique<SawBlade>(x, y, width, height);
     }
+
+    std::unique_ptr<Entity> Teleporter_factory::create_entity(int x, int y, int width, int height) {
+        return std::make_unique<Teleporter>(x, y, width, height);
+    }
 }

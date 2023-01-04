@@ -74,12 +74,28 @@ namespace Game_logic {
 
         // check hitboxes
         bool collided = false;
+        bool collided_with_teleporter = false;
+        if (teleporter_counter_active) {
+            teleporter_counter++;
+            if (teleporter_counter > 300) {
+                teleporter_counter_active = false;
+                teleporter_counter = 0;
+            }
+        }
         for (auto &entity: entities) {
             if (this->get_hitbox().collides(entity->get_hitbox())) {
                 if (entity->get_type() == Block_type::FINISH) {
                     collided_with_finish = true;
                 } else if (entity->get_type() == Block_type::SAW) {
                     collided_with_deadly_object = true;
+                } else if (entity->get_type() == Block_type::TELEPORTER && !teleporter_counter_active) {
+                    collided_with_teleporter = true;
+                    teleporter_counter_active = true;
+                    for (auto &other_entity : entities) {
+                        if (other_entity->get_type() == Block_type::TELEPORTER && other_entity != entity) {
+                            collided_teleporter = other_entity.get();
+                        }
+                    }
                 } else {
                     collided = true;
                     double shortest_x;
@@ -112,6 +128,7 @@ namespace Game_logic {
                         velocity_y = 0;
                     }
                 }
+                if (!collided_with_teleporter) collided_teleporter = nullptr;
             }
         }
 

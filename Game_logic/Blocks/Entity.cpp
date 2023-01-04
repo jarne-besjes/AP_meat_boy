@@ -141,6 +141,18 @@ namespace Game_logic {
     }
 
     Game_logic::Hitbox SawBlade::get_hitbox() const {
-        return {x, y, width, height};
+        return {x, y, width, height-5};
+    }
+
+    Teleporter::Teleporter(int x, int y, int width, int height) : Entity(x, y, width, height) {
+        block_type = Block_type::TELEPORTER;
+    }
+
+    Block_type Teleporter::get_type() const {
+        return block_type;
+    }
+
+    Game_logic::Hitbox Teleporter::get_hitbox() const {
+        return {x, y, width, height-5};
     }
 }

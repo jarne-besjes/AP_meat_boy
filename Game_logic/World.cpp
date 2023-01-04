@@ -37,6 +37,9 @@ namespace Game_logic {
  * @return int : level_size
  */
     int World::load_level(const std::string &level_name, bool &moving_camera) {
+
+        int nr_of_teleporters = 0;
+
         entities.clear();
         player.reset();
         // factories
@@ -44,6 +47,7 @@ namespace Game_logic {
         std::shared_ptr<Entity_factory> grass_factory = std::make_shared<Grass_factory>();
         std::shared_ptr<Entity_factory> finish_factory = std::make_shared<Finish_factory>();
         std::shared_ptr<Entity_factory> saw_factory = std::make_shared<Saw_factory>();
+        std::shared_ptr<Entity_factory> teleporter_factory = std::make_shared<Teleporter_factory>();
 
         json j;
         const std::string &level_loc = level_name;
@@ -70,6 +74,11 @@ namespace Game_logic {
                     finish_set = true;
                 } else if (level[y][x] == 's') {
                     entities.push_back(create_entity(saw_factory, x * 50, y * 50, 50, 50));
+                } else if (level[y][x] == 't') {
+                    if (++nr_of_teleporters > 2) {
+                        throw std::runtime_error("Too many teleporters in level");
+                    }
+                    entities.push_back(create_entity(teleporter_factory, x * 50, y * 50, 50, 50));
                 }
             }
         }

@@ -17,7 +17,8 @@ namespace Game_logic {
         GRASS,
         DIRT,
         FINISH,
-        SAW
+        SAW,
+        TELEPORTER
     };
 
     class Entity {
@@ -44,7 +45,6 @@ namespace Game_logic {
         virtual Game_logic::Hitbox get_hitbox() const = 0;
 
         void set_position(int x, int y);
-
 
         int get_x() const;
 
@@ -93,6 +93,16 @@ namespace Game_logic {
         Game_logic::Hitbox get_hitbox() const override;
     };
 
+    class Teleporter : public Entity {
+    public:
+        Teleporter(int x, int y, int width, int height);
+
+        ~Teleporter() override = default;
+
+        Block_type get_type() const override;
+
+        Game_logic::Hitbox get_hitbox() const override;
+    };
 }
 
 #endif //MEAT_BOY_ENTITY_H

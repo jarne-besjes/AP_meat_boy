@@ -46,6 +46,13 @@ namespace Game_logic {
         ~Saw_factory() override = default;
     };
 
+    class Teleporter_factory : public Entity_factory {
+    public:
+        std::unique_ptr<Entity> create_entity(int x, int y, int width, int height) override;
+
+        ~Teleporter_factory() override = default;
+    };
+
 }
 
 #endif //MEAT_BOY_ENTITY_FACTORY_H

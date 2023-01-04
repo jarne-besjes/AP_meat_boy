@@ -28,8 +28,10 @@ namespace Game_logic {
         bool against_wall_left = false;
 
         bool collided_with_finish = false;
-
         bool collided_with_deadly_object = false;
+        Entity *collided_teleporter = nullptr;
+        bool teleporter_counter_active = false;
+        int teleporter_counter = 0;
 
     public:
         Player();
@@ -50,6 +52,10 @@ namespace Game_logic {
 
         bool collides_with_deadly_object() const {
             return collided_with_deadly_object;
+        }
+
+        Entity *collides_with_teleporter() const {
+            return collided_teleporter;
         }
 
         Hitbox get_hitbox();
