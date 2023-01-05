@@ -6,18 +6,18 @@
 #define MEAT_BOY_FINISHED_MENU_H
 
 #include <SFML/Graphics.hpp>
+#include "After_game_menu.h"
 #include <memory>
 
 namespace Game_representation {
 
-    class Finished_menu {
-        sf::Font main_font;
+    class Finished_menu : public After_game_menu {
     public:
-        Finished_menu();
+        Finished_menu() = default;
 
-        std::unique_ptr<sf::RenderWindow> draw(std::unique_ptr<sf::RenderWindow> window);
+        std::unique_ptr<sf::RenderWindow> draw(std::unique_ptr<sf::RenderWindow> window) override;
 
-        bool update(); // if bool == true, the enter key has been pressed, so we need to go to the main menu
+        bool update() override; // if bool == true, the enter key has been pressed, so we need to go to the main menu
     };
 }
 

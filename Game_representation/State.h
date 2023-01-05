@@ -11,7 +11,8 @@ namespace Game_representation {
         MENU,
         GAME,
         LEVEL_CHOICE,
-        FINISHED
+        FINISHED,
+        DEAD
     };
 
     class State_manager {

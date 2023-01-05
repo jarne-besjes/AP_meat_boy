@@ -41,6 +41,8 @@ namespace Game_representation {
         while (window->isOpen()) {
             if (stopwatch->elapsed() <= FRAME_TIME) continue; // we are allow to use busy waiting to cap the framerate
 
+            if (print_fps) std::cout << "fps: " << int(1 / stopwatch->elapsed()) << std::endl;
+
             Game_state game_state = state_manager.get_state();
 
             sf::Event event;
@@ -87,19 +89,15 @@ namespace Game_representation {
                     if (world.get_player().get_position().y < camera.get_y()) {
                         camera.move_up(std::abs(world.get_player().get_position().y - camera.get_y()));
                     } else if (world.get_player().get_position().y > camera.get_y() + WINDOW_HEIGHT / 2) {
-                        // TODO: die
-                        state_manager.set_state(Game_state::MENU);
+                        state_manager.set_state(Game_state::DEAD);
                     }
                 }
                 Game_logic::Entity *teleporter = world.get_player().collides_with_teleporter();
 
                 if (world.get_player().collides_with_finish()) {
-                    // TODO
-                    std::cout << "You won!" << std::endl;
                     state_manager.set_state(Game_state::FINISHED);
                 } else if (world.get_player().collides_with_deadly_object()) {
-                    // TODO: die
-                    state_manager.set_state(Game_state::MENU);
+                    state_manager.set_state(Game_state::DEAD);
                 } else if (teleporter) {
                     world.get_player().set_position(teleporter->get_x(), teleporter->get_y() - 50);
                 }
@@ -121,6 +119,12 @@ namespace Game_representation {
             } else if (game_state == Game_state::FINISHED) {
                 bool enter_has_been_pressed = false;
                 window = view.draw_finished(std::move(window), enter_has_been_pressed);
+                if (enter_has_been_pressed) {
+                    state_manager.set_state(Game_state::MENU);
+                }
+            } else if (game_state == Game_state::DEAD) {
+                bool enter_has_been_pressed = false;
+                window = view.draw_dead(std::move(window), enter_has_been_pressed);
                 if (enter_has_been_pressed) {
                     state_manager.set_state(Game_state::MENU);
                 }

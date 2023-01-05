@@ -16,4 +16,6 @@ static double SPRITEHEIGHT = 50;
 
 static double global_time_scale = 900;
 
+static bool print_fps = true;
+
 #endif

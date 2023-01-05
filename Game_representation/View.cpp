@@ -186,4 +186,12 @@ namespace Game_representation {
         return window;
     }
 
+    std::unique_ptr<sf::RenderWindow>
+    View::draw_dead(std::unique_ptr<sf::RenderWindow> window, bool &enter_has_been_pressed) {
+        window = dead_menu.draw(std::move(window));
+        enter_has_been_pressed = dead_menu.update();
+
+        return window;
+    }
+
 }

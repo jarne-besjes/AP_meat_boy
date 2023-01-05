@@ -10,6 +10,7 @@
 #include "Main_menu.h"
 #include "Level_selection.h"
 #include "Finished_menu.h"
+#include "Dead_menu.h"
 
 namespace Game_logic {
     class Entity;
@@ -29,7 +30,7 @@ namespace Game_representation {
 
         Finished_menu finished_menu;
 
-        //sf::View view;
+        Dead_menu dead_menu;
 
         sf::Font main_font;
 
@@ -49,6 +50,9 @@ namespace Game_representation {
 
         std::unique_ptr<sf::RenderWindow>
         draw_finished(std::unique_ptr<sf::RenderWindow> window, bool &enter_has_been_pressed);
+
+        std::unique_ptr<sf::RenderWindow> draw_dead(std::unique_ptr<sf::RenderWindow> window, bool &enter_has_been_pressed);
+
     };
 
 }
