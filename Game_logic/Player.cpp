@@ -9,6 +9,8 @@
 #include "../Values.cpp"
 #include "../Stopwatch.h"
 
+
+
 namespace Game_logic {
 
 /**
@@ -37,40 +39,46 @@ namespace Game_logic {
 
         if (!on_ground) {
             if (!against_wall) {
-                velocity_y += GRAVITY;
+                velocity_y += GRAVITY * elapsed_time * global_time_scale;
             } else {
-                velocity_y += GRAVITY / 4;
+                velocity_y += GRAVITY / 1.5 * elapsed_time * global_time_scale;
                 if (velocity_y > PLAYER_MAX_SPEED / 2) {
                     velocity_y = PLAYER_MAX_SPEED / 2;
                 }
             }
         }
 
-        if (velocity_y > PLAYER_MAX_SPEED) {
-            velocity_y = PLAYER_MAX_SPEED;
+        std::cout << "gravity: " << GRAVITY * elapsed_time * global_time_scale << std::endl;
+
+        if (velocity_y > PLAYER_MAX_SPEED * 2) {
+            velocity_y = PLAYER_MAX_SPEED * 2;
         }
 
         if (right) {
-            velocity_x += PLAYER_ACCELERATION;
+            velocity_x += PLAYER_ACCELERATION * elapsed_time * global_time_scale;
         } else if (left) {
-            velocity_x -= PLAYER_ACCELERATION;
+            velocity_x -= PLAYER_ACCELERATION * elapsed_time * global_time_scale;
         } else {
             if (velocity_x > 0) {
-                velocity_x -= PLAYER_DECELERATION;
+                velocity_x -= PLAYER_DECELERATION * elapsed_time * global_time_scale;
                 if (velocity_x < 0) {
                     velocity_x = 0;
                 }
             } else if (velocity_x < 0) {
-                velocity_x += PLAYER_DECELERATION;
+                velocity_x += PLAYER_DECELERATION * elapsed_time * global_time_scale;
                 if (velocity_x > 0) {
                     velocity_x = 0;
                 }
             }
         }
 
+        double wanted_x = position_x + velocity_x * elapsed_time * global_time_scale;
+        double wanted_y = position_y + velocity_y * elapsed_time * global_time_scale;
 
-        position_x += velocity_x * elapsed_time * global_time_scale;
-        position_y += velocity_y * elapsed_time * global_time_scale;
+        double collision_time = check_sweeping_collision(wanted_x, wanted_y, entities);
+
+        position_x = wanted_x * collision_time;
+        position_y = wanted_y * collision_time;
 
         // check hitboxes
         bool collided = false;
@@ -91,6 +99,9 @@ namespace Game_logic {
                 } else if (entity->get_type() == Block_type::TELEPORTER && !teleporter_counter_active) {
                     collided_with_teleporter = true;
                     teleporter_counter_active = true;
+                    // reset player speed
+                    velocity_x = 0;
+                    velocity_y = 0;
                     for (auto &other_entity : entities) {
                         if (other_entity->get_type() == Block_type::TELEPORTER && other_entity != entity) {
                             collided_teleporter = other_entity.get();
@@ -204,6 +215,65 @@ namespace Game_logic {
 
     Position Player::get_projected_position() {
         return Position{projected_x, projected_y};
+    }
+
+    // used a source in this case to get sweeping collision detection working
+    // https://www.amanotes.com/post/using-swept-aabb-to-detect-and-process-collision
+    // starting from Using swept
+    double Player::check_sweeping_collision(double &wanted_x, double &wanted_y,
+                                          std::vector<std::shared_ptr<Entity>> &entities) {
+        double dxEntry, dyEntry, dxExit, dyExit, txEntry, tyEntry, txExit, tyExit;
+        dxEntry = std::numeric_limits<double>::infinity();
+        dyEntry = std::numeric_limits<double>::infinity();
+        dxExit = std::numeric_limits<double>::infinity();
+        dyExit = std::numeric_limits<double>::infinity();
+        for (auto entity : entities){
+            if (velocity_x > 0) {
+                // distance we have to move to begin contact with entity
+                dxEntry = std::min(dxEntry, entity->get_hitbox().get_left() - (position_x + SPRITEWIDTH));
+                // distance we have to move to end contact with entity
+                dxExit = std::min(dxExit, entity->get_hitbox().get_right() - position_x);
+            } else {
+                dxEntry = std::min(dxEntry, entity->get_hitbox().get_right() - position_x);
+                dxExit = std::min(dxExit, entity->get_hitbox().get_left() - (position_x + SPRITEWIDTH));
+            }
+
+            if (velocity_y > 0) {
+                dyEntry = std::min(dyEntry, entity->get_hitbox().get_top() - (position_y + SPRITEHEIGHT));
+                dyExit = std::min(dyExit, entity->get_hitbox().get_bottom() - position_y);
+            } else {
+                dyEntry = std::min(dyEntry, entity->get_hitbox().get_bottom() - position_y);
+                dyExit = std::min(dyExit, entity->get_hitbox().get_top() - (position_y + SPRITEHEIGHT));
+            }
+
+        }
+
+        if (velocity_x == 0) {
+            txEntry = -std::numeric_limits<double>::infinity();
+            txExit = std::numeric_limits<double>::infinity();
+        } else {
+            txEntry = dxEntry / velocity_x;
+            txExit = dxExit / velocity_x;
+        }
+
+        if (velocity_y == 0) {
+            tyEntry = -std::numeric_limits<double>::infinity();
+            tyExit = std::numeric_limits<double>::infinity();
+        } else {
+            tyEntry = dyEntry / velocity_y;
+            tyExit = dyExit / velocity_y;
+        }
+
+        double entryTime = std::max(txEntry, tyEntry);
+        double exitTime = std::min(txExit, tyExit);
+
+        if (entryTime > exitTime || (txEntry < 0 && tyEntry < 0) || txEntry > 1 || tyEntry > 1) {
+            return 1;
+        }
+
+        return entryTime;
+
+
     }
 
 }
