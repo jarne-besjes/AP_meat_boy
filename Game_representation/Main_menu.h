@@ -6,16 +6,15 @@
 #define MEAT_BOY_MAIN_MENU_H
 
 #include "SFML/Graphics.hpp"
+#include "Menu.h"
 #include <memory>
 
 namespace Game_representation {
 
     class Game;
 
-    class Main_menu {
+    class Main_menu : Menu {
         Game &game;
-
-        sf::Font main_font;
 
         sf::Text game_title;
         sf::Text play_button;
@@ -29,12 +28,11 @@ namespace Game_representation {
     public:
         explicit Main_menu(Game &game);
 
-        bool update(); // if bool == true, the game has to close
+        bool update() override; // if bool == true, the game has to close
 
-        void draw();
+        std::unique_ptr<sf::RenderWindow> draw(std::unique_ptr<sf::RenderWindow> window) override;
 
-        std::unique_ptr<sf::RenderWindow> display(std::unique_ptr<sf::RenderWindow> window);
-
+        ~Main_menu() override = default;
     };
 
 }

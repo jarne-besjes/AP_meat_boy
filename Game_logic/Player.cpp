@@ -72,8 +72,12 @@ namespace Game_logic {
 
         double wanted_x = position_x + velocity_x * elapsed_time * global_time_scale;
         double wanted_y = position_y + velocity_y * elapsed_time * global_time_scale;
-
-        double collision_time = check_sweeping_collision(wanted_x, wanted_y, entities);
+        double collision_time;
+        if (!against_wall || !on_ground){
+            collision_time = check_sweeping_collision(wanted_x, wanted_y, entities);
+        } else {
+            collision_time = 1.0f;
+        }
 
         position_x += velocity_x * collision_time * elapsed_time * global_time_scale;
         position_y += velocity_y * collision_time * elapsed_time * global_time_scale;
@@ -267,17 +271,11 @@ namespace Game_logic {
         double entryTime = std::max(txEntry, tyEntry);
         double exitTime = std::min(txExit, tyExit);
 
-        if (entryTime > exitTime || (txEntry < 0 && tyEntry < 0) || txEntry > 1 || tyEntry > 1) {
+        if (entryTime > exitTime || (txEntry < 0 && tyEntry < 0) || txEntry > 1 || tyEntry > 1 || txEntry == 0 || tyEntry == 0) {
             return 1;
         }
 
-        std::cout << "txEntry: " << txEntry << " tyEntry: " << tyEntry << " txExit: " << txExit << " tyExit: " << tyExit << std::endl;
-        std::cout << "entryTime: " << entryTime << " exitTime: " << exitTime << std::endl;
-
-
         return entryTime;
-
-
     }
 
 }

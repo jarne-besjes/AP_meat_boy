@@ -6,12 +6,12 @@
 #define MEAT_BOY_FINISHED_MENU_H
 
 #include <SFML/Graphics.hpp>
-#include "After_game_menu.h"
+#include "Menu.h"
 #include <memory>
 
 namespace Game_representation {
 
-    class Finished_menu : public After_game_menu {
+    class Finished_menu : public Menu {
     public:
         Finished_menu() = default;
 

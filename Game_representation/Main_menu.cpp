@@ -17,22 +17,20 @@ namespace Game_representation {
  *
  * @param game : game object
  */
-    Main_menu::Main_menu(Game &game) : game(game) {
-        main_font.loadFromFile("Game_representation/assets/Debrosee.ttf");
-    }
+    Main_menu::Main_menu(Game &game) : game(game) {}
 
 /**
  * @brief Draw the main menu to the screen
  *
  */
-    void Main_menu::draw() {
-        game_title.setFont(main_font);
+    std::unique_ptr<sf::RenderWindow> Main_menu::draw(std::unique_ptr<sf::RenderWindow> window) {
+        game_title.setFont(font);
         game_title.setString("Meat Boy");
         game_title.setOrigin(game_title.getLocalBounds().width / 2, game_title.getLocalBounds().height / 2);
         game_title.setPosition(WINDOW_WIDTH / 2, 100);
         game_title.setScale(2, 2);
 
-        play_button.setFont(main_font);
+        play_button.setFont(font);
         play_button.setString("Play");
         play_button.setOrigin(play_button.getLocalBounds().width / 2, play_button.getLocalBounds().height / 2);
         play_button.setPosition(WINDOW_WIDTH / 2, 300);
@@ -43,7 +41,7 @@ namespace Game_representation {
             play_button.setFillColor(sf::Color::White);
         }
 
-        quit_button.setFont(main_font);
+        quit_button.setFont(font);
         quit_button.setString("Quit");
         quit_button.setOrigin(quit_button.getLocalBounds().width / 2, quit_button.getLocalBounds().height / 2);
         quit_button.setPosition(WINDOW_WIDTH / 2, 400);
@@ -53,6 +51,12 @@ namespace Game_representation {
         } else {
             quit_button.setFillColor(sf::Color::White);
         }
+
+        window->draw(game_title);
+        window->draw(play_button);
+        window->draw(quit_button);
+
+        return window;
     }
 
 /**
@@ -91,20 +95,4 @@ namespace Game_representation {
 
         return false;
     }
-
-/**
- * @brief Display the main menu to the window
- *
- * @param window : window to draw to
- *
- * @return std::unique_ptr<sf::RenderWindow> : the window
- */
-    std::unique_ptr<sf::RenderWindow> Main_menu::display(std::unique_ptr<sf::RenderWindow> window) {
-        window->draw(game_title);
-        window->draw(play_button);
-        window->draw(quit_button);
-
-        return window;
-    }
-
 }

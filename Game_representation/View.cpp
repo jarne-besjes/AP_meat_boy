@@ -18,8 +18,7 @@ namespace Game_representation {
  * @return std::unique_ptr<sf::RenderWindow> : the window to draw the menu to
  */
     std::unique_ptr<sf::RenderWindow> View::draw_menu(std::unique_ptr<sf::RenderWindow> window, bool &has_to_close) {
-        menu.draw();
-        window = menu.display(std::move(window));
+        window = menu.draw(std::move(window));
         has_to_close = menu.update();
 
         return window;

@@ -8,6 +8,7 @@
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "Menu.h"
 
 namespace Game_representation {
 
@@ -19,7 +20,6 @@ namespace Game_representation {
 
     public:
         Level_selection();
-
 
         std::unique_ptr<sf::RenderWindow>
         draw(std::unique_ptr<sf::RenderWindow> window, const std::vector<std::string> &levels);

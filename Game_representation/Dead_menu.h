@@ -7,10 +7,10 @@
 
 #include <SFML/Graphics.hpp>
 #include <memory>
-#include "After_game_menu.h"
+#include "Menu.h"
 
 namespace Game_representation {
-    class Dead_menu : public After_game_menu {
+    class Dead_menu : public Menu {
     public:
 
         std::unique_ptr<sf::RenderWindow> draw(std::unique_ptr<sf::RenderWindow> window) override;
