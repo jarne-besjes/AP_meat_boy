@@ -21,6 +21,8 @@ namespace Game_logic {
 
         std::vector<std::shared_ptr<Entity>> entities;
 
+        bool automatic_camera =false;
+
     public:
         World();
 

@@ -85,12 +85,15 @@ namespace Game_representation {
                 camera.project_entities(world.get_entities());
                 camera.project_player(world.get_player());
                 window = view.draw_entities(std::move(window), world.get_entities());
+                if (world.get_player().get_position().y < camera.get_y() - 0.3 * WINDOW_HEIGHT) {
+                    camera.move_up(
+                            std::abs(world.get_player().get_position().y - (camera.get_y() - 0.3 * WINDOW_HEIGHT)));
+                }
                 if (moving_camera) {
-                    if (world.get_player().get_position().y < camera.get_y()) {
-                        camera.move_up(std::abs(world.get_player().get_position().y - camera.get_y()));
-                    } else if (world.get_player().get_position().y > camera.get_y() + WINDOW_HEIGHT / 2) {
-                        state_manager.set_state(Game_state::DEAD);
-                    }
+                    camera.move_up(0.5);
+                }
+                if (world.get_player().get_position().y > camera.get_y() + WINDOW_HEIGHT / 2) {
+                    state_manager.set_state(Game_state::DEAD);
                 }
                 Game_logic::Entity *teleporter = world.get_player().collides_with_teleporter();
 

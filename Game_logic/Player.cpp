@@ -146,6 +146,12 @@ namespace Game_logic {
             }
         }
 
+        if (position_x < 0) {
+            position_x = 0;
+        } else if (position_x > WINDOW_WIDTH - SPRITEWIDTH) {
+            position_x = WINDOW_WIDTH - SPRITEWIDTH;
+        }
+
         if (!collided) {
             against_wall = false;
             on_ground = false;

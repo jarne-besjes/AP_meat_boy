@@ -56,6 +56,7 @@ namespace Game_logic {
         i.close();
 
         moving_camera = j["moving_camera"];
+        automatic_camera = moving_camera;
         std::vector<std::string> level = j["level"];
 
         bool finish_set = false;
