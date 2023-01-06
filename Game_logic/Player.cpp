@@ -48,8 +48,6 @@ namespace Game_logic {
             }
         }
 
-        std::cout << "gravity: " << GRAVITY * elapsed_time * global_time_scale << std::endl;
-
         if (velocity_y > PLAYER_MAX_SPEED * 2) {
             velocity_y = PLAYER_MAX_SPEED * 2;
         }
@@ -77,11 +75,12 @@ namespace Game_logic {
 
         double collision_time = check_sweeping_collision(wanted_x, wanted_y, entities);
 
-        position_x = wanted_x * collision_time;
-        position_y = wanted_y * collision_time;
+        position_x += velocity_x * collision_time * elapsed_time * global_time_scale;
+        position_y += velocity_y * collision_time * elapsed_time * global_time_scale;
+
+        bool collided = collision_time != 1.0f;
 
         // check hitboxes
-        bool collided = false;
         bool collided_with_teleporter = false;
         if (teleporter_counter_active) {
             teleporter_counter++;
@@ -264,12 +263,17 @@ namespace Game_logic {
             tyExit = dyExit / velocity_y;
         }
 
+
         double entryTime = std::max(txEntry, tyEntry);
         double exitTime = std::min(txExit, tyExit);
 
         if (entryTime > exitTime || (txEntry < 0 && tyEntry < 0) || txEntry > 1 || tyEntry > 1) {
             return 1;
         }
+
+        std::cout << "txEntry: " << txEntry << " tyEntry: " << tyEntry << " txExit: " << txExit << " tyExit: " << tyExit << std::endl;
+        std::cout << "entryTime: " << entryTime << " exitTime: " << exitTime << std::endl;
+
 
         return entryTime;
 
