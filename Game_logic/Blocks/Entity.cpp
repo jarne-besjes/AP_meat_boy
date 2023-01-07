@@ -132,26 +132,57 @@ namespace Game_logic {
         return {x, y, width, height};
     }
 
+    /**
+     * @biref construct a new SawBlade object
+     * @param x : x coordinate of the sawblade (left top)
+     * @param y : y coordinate of the sawblade (left top)
+     * @param width : width of the sawblade
+     * @param height : height of the sawblade
+     */
     SawBlade::SawBlade(int x, int y, int width, int height) : Entity(x, y, width, height) {
         block_type = Block_type::SAW;
     }
 
+    /**
+     * @brief return the type of the block
+     * @return type of the block
+     */
     Block_type SawBlade::get_type() const {
         return block_type;
     }
-
+    /**
+     * @brief return the hitbox of the sawblade
+     *
+     * @return
+     */
     Game_logic::Hitbox SawBlade::get_hitbox() const {
         return {x, y, width, height-5};
     }
 
+    /**
+     * @brief construct a new Teleporter object
+     * @param x : x coordinate of the Teleporter (left top)
+     * @param y : y coordinate of the Teleporter (left top)
+     * @param width : width of the Teleporter
+     * @param height : height of the Teleporter
+     */
     Teleporter::Teleporter(int x, int y, int width, int height) : Entity(x, y, width, height) {
         block_type = Block_type::TELEPORTER;
     }
 
+    /**
+     * @brief return the type of the block
+     * @return type of the block
+     */
     Block_type Teleporter::get_type() const {
         return block_type;
     }
 
+    /**
+     * @brief return the hitbox of the Teleporter
+     *
+     * @return
+     */
     Game_logic::Hitbox Teleporter::get_hitbox() const {
         return {x, y, width, height-5};
     }

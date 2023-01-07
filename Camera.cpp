@@ -9,7 +9,7 @@
  * 
  * @return int : x coordinate
  */
-int Camera::get_x() const {
+float Camera::get_x() const {
     return x;
 }
 
@@ -18,7 +18,7 @@ int Camera::get_x() const {
  * 
  * @return int : y coordinate
  */
-int Camera::get_y() const {
+float Camera::get_y() const {
     return y;
 }
 
@@ -27,7 +27,7 @@ int Camera::get_y() const {
  * 
  * @return int : width
  */
-int Camera::get_width() const {
+float Camera::get_width() const {
     return width;
 }
 
@@ -36,7 +36,7 @@ int Camera::get_width() const {
  * 
  * @return int : height
  */
-int Camera::get_height() const {
+float Camera::get_height() const {
     return height;
 }
 
@@ -45,7 +45,7 @@ int Camera::get_height() const {
  * 
  * @param _y : y coordinate
  */
-void Camera::set_y(int _y) {
+void Camera::set_y(float _y) {
     Camera::y = _y;
     bottom_y = y - WINDOW_HEIGHT/2;
     top_y = y + WINDOW_HEIGHT/2;
@@ -56,7 +56,7 @@ void Camera::set_y(int _y) {
  * 
  * @param amount : amount of pixels to move the camera up
  */
-void Camera::move_up(int amount) {
+void Camera::move_up(float amount) {
     y -= amount;
     bottom_y = y - WINDOW_HEIGHT/2;
     top_y = y + WINDOW_HEIGHT/2;

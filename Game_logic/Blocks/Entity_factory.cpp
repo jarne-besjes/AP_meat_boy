@@ -56,10 +56,26 @@ namespace Game_logic {
         return std::make_unique<Finish>(x,y, width, height);
     }
 
+    /**
+     * @brief Creates and returns a SawBlade entity
+     * @param x : x coordinate of the entity
+     * @param y : y coordinate of the entity
+     * @param width : width of the entity
+     * @param height : height of the entity
+     * @return std::unique_ptr<Entity> : the created entity
+     */
     std::unique_ptr<Entity> Saw_factory::create_entity(int x, int y, int width, int height) {
         return std::make_unique<SawBlade>(x, y, width, height);
     }
 
+    /**
+     * @brief Creates and returns a Teleporter Entity
+     * @param x : x coordinate of the entity
+     * @param y : y coordinate of the entity
+     * @param width : width of the entity
+     * @param height : height of the entity
+     * @return std::unique_ptr<Entity> : the created entity
+     */
     std::unique_ptr<Entity> Teleporter_factory::create_entity(int x, int y, int width, int height) {
         return std::make_unique<Teleporter>(x, y, width, height);
     }

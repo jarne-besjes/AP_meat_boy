@@ -23,6 +23,9 @@ void Stopwatch::start() {
     running = true;
 }
 
+/**
+ * @brief returns the passed time since the previous frame
+ */
 double Stopwatch::elapsed() {
     if (!running) {
         throw std::runtime_error("Stopwatch is not running");
@@ -32,6 +35,9 @@ double Stopwatch::elapsed() {
     return elapsed_seconds.count();
 }
 
+/**
+ * @brief resets the stopwatch
+ */
 void Stopwatch::next_frame() {
     if (!running) {
         throw std::runtime_error("Stopwatch is not running");

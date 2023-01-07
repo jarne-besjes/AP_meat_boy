@@ -4,7 +4,6 @@
 
 #include "Player.h"
 #include <math.h>
-#include <iostream>
 #include "Hitbox.h"
 #include "../Values.cpp"
 #include "../Stopwatch.h"
@@ -222,13 +221,23 @@ namespace Game_logic {
         collided_with_deadly_object = false;
     }
 
+    /**
+     * @brief return the projected position of the player
+     * @return : projected position of the player
+     */
     Position Player::get_projected_position() {
         return Position{projected_x, projected_y};
     }
 
     // used a source in this case to get sweeping collision detection working
     // https://www.amanotes.com/post/using-swept-aabb-to-detect-and-process-collision
-    // starting from Using swept
+    /**
+     * @brief check if the player collides with an entity by sweeping the hitbox
+     * @param wanted_x : x coordinate of the position the player wants to go to
+     * @param wanted_y : y coordinate of the position the player wants to go to
+     * @param entities : vector of entities in the world
+     * @return : time of collision
+     */
     double Player::check_sweeping_collision(double &wanted_x, double &wanted_y,
                                           std::vector<std::shared_ptr<Entity>> &entities) {
         double dxEntry, dyEntry, dxExit, dyExit, txEntry, tyEntry, txExit, tyExit;

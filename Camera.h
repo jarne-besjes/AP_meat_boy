@@ -13,7 +13,7 @@ class Camera {
 
     // we always start the camera at the bottom of the screen
     const int x = 300; // x cant be changed
-    int y;       // we only change the camera vertically
+    float y;       // we only change the camera vertically
     // y = level size * 50 (blocks are 50x50) - 300
 
     int width = WINDOW_WIDTH;
@@ -29,17 +29,17 @@ public:
 
     void set_level_size(int level_y_size);
 
-    int get_x() const;
+    float get_x() const;
 
-    int get_y() const;
+    float get_y() const;
 
-    int get_width() const;
+    float get_width() const;
 
-    int get_height() const;
+    float get_height() const;
 
-    void set_y(int y);
+    void set_y(float y);
 
-    void move_up(int amount);
+    void move_up(float amount);
 
     void get_visible_entities(std::vector<std::shared_ptr<Game_logic::Entity>> &entities) const;
 

@@ -3,7 +3,11 @@
 //
 
 #include "Dead_menu.h"
-
+/**
+ * @brief draw the menu
+ * @param window : window to draw the menu on (be sure to move this)
+ * @return std::unique_ptr<sf::RenderWindow> : the window
+ */
 std::unique_ptr<sf::RenderWindow> Game_representation::Dead_menu::draw(std::unique_ptr<sf::RenderWindow> window) {
     sf::Text text;
     sf::Text return_text;
@@ -25,6 +29,10 @@ std::unique_ptr<sf::RenderWindow> Game_representation::Dead_menu::draw(std::uniq
     return window;
 }
 
+/**
+ * @brief update the menu (check for input)
+ * @return : whether the enter key is pressed
+ */
 bool Game_representation::Dead_menu::update() {
     return sf::Keyboard::isKeyPressed(sf::Keyboard::Enter);
 }
