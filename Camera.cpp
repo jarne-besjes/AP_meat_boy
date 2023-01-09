@@ -105,7 +105,7 @@ void Camera::project_entities(std::vector<std::shared_ptr<Game_logic::Entity>> &
     }
 }
 
-void Camera::project_player(Game_logic::Player &player) {
+void Camera::project_player(Game_logic::Player &player) const {
     Game_logic::Position playerpos = player.get_position();
     player.projected_x = playerpos.x;
     player.projected_y = WINDOW_HEIGHT - (top_y - playerpos.y);

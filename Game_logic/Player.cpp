@@ -4,6 +4,7 @@
 
 #include "Player.h"
 #include <math.h>
+#include <iostream>
 #include "Hitbox.h"
 #include "../Values.cpp"
 #include "../Stopwatch.h"
@@ -92,6 +93,11 @@ namespace Game_logic {
                 teleporter_counter = 0;
             }
         }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+            std::cout << std::endl;
+        }
+
         for (auto &entity: entities) {
             if (this->get_hitbox().collides(entity->get_hitbox())) {
                 if (entity->get_type() == Block_type::FINISH) {
@@ -113,32 +119,42 @@ namespace Game_logic {
                     collided = true;
                     double shortest_x;
                     double shortest_y;
-                    shortest_x = std::min(std::abs(this->get_hitbox().get_right() - entity->get_hitbox().get_left()),
-                                          std::abs(this->get_hitbox().get_left() - entity->get_hitbox().get_right()));
+
+                    shortest_x = std::min(std::abs(entity->get_hitbox().get_left() - this->get_hitbox().get_right()),
+                                          std::abs(entity->get_hitbox().get_right() - this->get_hitbox().get_left()));
+
                     shortest_y = std::min(std::abs(this->get_hitbox().get_top() - entity->get_hitbox().get_bottom()),
                                           std::abs(this->get_hitbox().get_bottom() - entity->get_hitbox().get_top()));
 
+                    double shortest_x_vel = velocity_x > 0 ? std::abs(this->get_hitbox().get_right() - entity->get_hitbox().get_left()) : std::abs(this->get_hitbox().get_left() - entity->get_hitbox().get_right());
+
+                    double shortest_y_vel = velocity_y > 0 ? std::abs(this->get_hitbox().get_bottom() - entity->get_hitbox().get_top()) : std::abs(this->get_hitbox().get_top() - entity->get_hitbox().get_bottom());
+
+
                     if (shortest_x <= shortest_y) {
+                        if (shortest_x != shortest_x_vel) continue;
                         //horizontal
                         against_wall = true;
-                        if (velocity_x > 0) {
-                            position_x = entity->get_x() - SPRITEWIDTH;
+                        if (velocity_x > 0)  {
+                            position_x = entity->get_x() - SPRITEWIDTH + 0.1f;
                             against_wall_left = false;
                         } else if (velocity_x < 0) {
-                            position_x = entity->get_x() + SPRITEWIDTH;
+                            position_x = entity->get_x() + SPRITEWIDTH -0.1f;
                             against_wall_left = true;
                         }
                         velocity_x = 0;
+                        on_ground = false;
                     } else {
+                        if (shortest_y != shortest_y_vel) continue;
                         // vertical
                         against_wall = false;
                         if (velocity_y > 0) {
-                            position_y = entity->get_y() - SPRITEHEIGHT;
+                            position_y = entity->get_y() - SPRITEHEIGHT + 0.1f;
                             on_ground = true;
                         } else if (velocity_y < 0) {
-                            position_y = entity->get_y() + SPRITEHEIGHT + 0.1f;
+                            position_y = entity->get_y() + SPRITEHEIGHT - 0.1f;
                         }
-                        velocity_y = 0;
+                        velocity_y = velocity_y == 0 ? GRAVITY : 0;
                     }
                 }
                 if (!collided_with_teleporter) collided_teleporter = nullptr;
@@ -146,6 +162,7 @@ namespace Game_logic {
         }
 
         if (position_x < 0) {
+            collided_with_deadly_object = true;
             position_x = 0;
         } else if (position_x > WINDOW_WIDTH - SPRITEWIDTH) {
             position_x = WINDOW_WIDTH - SPRITEWIDTH;
@@ -239,13 +256,13 @@ namespace Game_logic {
      * @return : time of collision
      */
     double Player::check_sweeping_collision(double &wanted_x, double &wanted_y,
-                                          std::vector<std::shared_ptr<Entity>> &entities) {
+                                          std::vector<std::shared_ptr<Entity>> &entities) const {
         double dxEntry, dyEntry, dxExit, dyExit, txEntry, tyEntry, txExit, tyExit;
         dxEntry = std::numeric_limits<double>::infinity();
         dyEntry = std::numeric_limits<double>::infinity();
         dxExit = std::numeric_limits<double>::infinity();
         dyExit = std::numeric_limits<double>::infinity();
-        for (auto entity : entities){
+        for (const auto &entity : entities){
             if (velocity_x > 0) {
                 // distance we have to move to begin contact with entity
                 dxEntry = std::min(dxEntry, entity->get_hitbox().get_left() - (position_x + SPRITEWIDTH));

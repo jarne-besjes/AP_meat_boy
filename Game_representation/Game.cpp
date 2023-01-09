@@ -102,7 +102,7 @@ namespace Game_representation {
                 } else if (world.get_player().collides_with_deadly_object()) {
                     state_manager.set_state(Game_state::DEAD);
                 } else if (teleporter) {
-                    world.get_player().set_position(teleporter->get_x(), teleporter->get_y() - 50);
+                    world.get_player().set_position(teleporter->get_x(), teleporter->get_y() - 50 - 0.1f);
                 }
             } else if (game_state == Game_state::LEVEL_CHOICE) {
                 std::string level;

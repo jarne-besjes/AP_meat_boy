@@ -4,7 +4,7 @@
 
 static double PLAYER_MAX_SPEED = 3;
 static double PLAYER_ACCELERATION = 0.2;
-static double PLAYER_DECELERATION = 2;
+static double PLAYER_DECELERATION = 0.4;
 static double GRAVITY = 0.2;
 static double JUMP_ACCEL = 8;
 

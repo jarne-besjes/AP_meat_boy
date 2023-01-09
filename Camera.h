@@ -47,7 +47,7 @@ public:
 
     void project_entities(std::vector<std::shared_ptr<Game_logic::Entity>> &entities);
 
-    void project_player(Game_logic::Player &player);
+    void project_player(Game_logic::Player &player) const;
 };
 
 
