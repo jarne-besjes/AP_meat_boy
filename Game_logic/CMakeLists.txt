@@ -10,4 +10,4 @@ SET(SRC World.cpp Player.cpp Player.h Blocks/Entity.cpp Blocks/Entity.h Blocks/E
 # The program we're compiling with the sources set above
 ADD_LIBRARY(Meat_boy_game_logic ${SRC})
 
-TARGET_LINK_LIBRARIES(Meat_boy_game_representation)
+#TARGET_LINK_LIBRARIES(Meat_boy_game_representation)
