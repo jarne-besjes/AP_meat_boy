@@ -33,7 +33,9 @@ namespace Game_logic {
         bool teleporter_counter_active = false;
         int teleporter_counter = 0;
 
-        double check_sweeping_collision(double &wanted_x, double &wanted_y, std::vector<std::shared_ptr<Entity>> &entities) const;
+        double check_sweeping_collision(double &wanted_x, double &wanted_y,
+                                        std::vector<std::shared_ptr<Entity>> &entities) const;
+
     public:
         Player();
 

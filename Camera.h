@@ -4,6 +4,7 @@
 
 #ifndef MEAT_BOY_CAMERA_H
 #define MEAT_BOY_CAMERA_H
+
 #include "Values.cpp"
 #include "Game_logic/Blocks/Entity.h"
 #include <memory>
@@ -21,8 +22,6 @@ class Camera {
     double bottom_y = 0;
     double top_y = 0;
 public:
-    // TODO: find out the level bounds and set the y coordinate accordingly in the get_visible entities function
-
     bool enabled = false;
 
     Camera();
@@ -49,7 +48,6 @@ public:
 
     void project_player(Game_logic::Player &player) const;
 };
-
 
 
 #endif //MEAT_BOY_CAMERA_H

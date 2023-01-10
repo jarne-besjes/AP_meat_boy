@@ -10,7 +10,6 @@
 #include "../Stopwatch.h"
 
 
-
 namespace Game_logic {
 
 /**
@@ -73,7 +72,7 @@ namespace Game_logic {
         double wanted_x = position_x + velocity_x * elapsed_time * global_time_scale;
         double wanted_y = position_y + velocity_y * elapsed_time * global_time_scale;
         double collision_time;
-        if (!against_wall || !on_ground){
+        if (!against_wall || !on_ground) {
             collision_time = check_sweeping_collision(wanted_x, wanted_y, entities);
         } else {
             collision_time = 1.0f;
@@ -110,7 +109,7 @@ namespace Game_logic {
                     // reset player speed
                     velocity_x = 0;
                     velocity_y = 0;
-                    for (auto &other_entity : entities) {
+                    for (auto &other_entity: entities) {
                         if (other_entity->get_type() == Block_type::TELEPORTER && other_entity != entity) {
                             collided_teleporter = other_entity.get();
                         }
@@ -126,20 +125,24 @@ namespace Game_logic {
                     shortest_y = std::min(std::abs(this->get_hitbox().get_top() - entity->get_hitbox().get_bottom()),
                                           std::abs(this->get_hitbox().get_bottom() - entity->get_hitbox().get_top()));
 
-                    double shortest_x_vel = velocity_x > 0 ? std::abs(this->get_hitbox().get_right() - entity->get_hitbox().get_left()) : std::abs(this->get_hitbox().get_left() - entity->get_hitbox().get_right());
+                    double shortest_x_vel =
+                            velocity_x > 0 ? std::abs(this->get_hitbox().get_right() - entity->get_hitbox().get_left())
+                                           : std::abs(this->get_hitbox().get_left() - entity->get_hitbox().get_right());
 
-                    double shortest_y_vel = velocity_y > 0 ? std::abs(this->get_hitbox().get_bottom() - entity->get_hitbox().get_top()) : std::abs(this->get_hitbox().get_top() - entity->get_hitbox().get_bottom());
+                    double shortest_y_vel =
+                            velocity_y > 0 ? std::abs(this->get_hitbox().get_bottom() - entity->get_hitbox().get_top())
+                                           : std::abs(this->get_hitbox().get_top() - entity->get_hitbox().get_bottom());
 
 
                     if (shortest_x <= shortest_y) {
                         if (shortest_x != shortest_x_vel) continue;
                         //horizontal
                         against_wall = true;
-                        if (velocity_x > 0)  {
+                        if (velocity_x > 0) {
                             position_x = entity->get_x() - SPRITEWIDTH + 0.1f;
                             against_wall_left = false;
                         } else if (velocity_x < 0) {
-                            position_x = entity->get_x() + SPRITEWIDTH -0.1f;
+                            position_x = entity->get_x() + SPRITEWIDTH - 0.1f;
                             against_wall_left = true;
                         }
                         velocity_x = 0;
@@ -256,13 +259,13 @@ namespace Game_logic {
      * @return : time of collision
      */
     double Player::check_sweeping_collision(double &wanted_x, double &wanted_y,
-                                          std::vector<std::shared_ptr<Entity>> &entities) const {
+                                            std::vector<std::shared_ptr<Entity>> &entities) const {
         double dxEntry, dyEntry, dxExit, dyExit, txEntry, tyEntry, txExit, tyExit;
         dxEntry = std::numeric_limits<double>::infinity();
         dyEntry = std::numeric_limits<double>::infinity();
         dxExit = std::numeric_limits<double>::infinity();
         dyExit = std::numeric_limits<double>::infinity();
-        for (const auto &entity : entities){
+        for (const auto &entity: entities) {
             if (velocity_x > 0) {
                 // distance we have to move to begin contact with entity
                 dxEntry = std::min(dxEntry, entity->get_hitbox().get_left() - (position_x + SPRITEWIDTH));
@@ -303,7 +306,8 @@ namespace Game_logic {
         double entryTime = std::max(txEntry, tyEntry);
         double exitTime = std::min(txExit, tyExit);
 
-        if (entryTime > exitTime || (txEntry < 0 && tyEntry < 0) || txEntry > 1 || tyEntry > 1 || txEntry == 0 || tyEntry == 0) {
+        if (entryTime > exitTime || (txEntry < 0 && tyEntry < 0) || txEntry > 1 || tyEntry > 1 || txEntry == 0 ||
+            tyEntry == 0) {
             return 1;
         }
 

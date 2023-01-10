@@ -78,7 +78,6 @@ namespace Game_representation {
         sf::Texture teleporter_texture2;
         sf::Texture teleporter_texture3;
 
-        // TODO: try catch and do this in constructor
         dirt_texture.loadFromFile("Game_representation/assets/textures/tex_dirt.jpg");
         grass_texture.loadFromFile("Game_representation/assets/textures/tex_grass.jpg");
         finish_texture.loadFromFile("Game_representation/assets/textures/finish.png");
@@ -104,7 +103,6 @@ namespace Game_representation {
         teleporter_sprite1.setTextureRect(sf::IntRect(0, 0, 50, 50));
         teleporter_sprite2.setTextureRect(sf::IntRect(0, 0, 50, 50));
         teleporter_sprite3.setTextureRect(sf::IntRect(0, 0, 50, 50));
-
 
 
         for (auto &entity: entities) {

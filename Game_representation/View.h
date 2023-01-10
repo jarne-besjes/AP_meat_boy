@@ -51,7 +51,8 @@ namespace Game_representation {
         std::unique_ptr<sf::RenderWindow>
         draw_finished(std::unique_ptr<sf::RenderWindow> window, bool &enter_has_been_pressed);
 
-        std::unique_ptr<sf::RenderWindow> draw_dead(std::unique_ptr<sf::RenderWindow> window, bool &enter_has_been_pressed);
+        std::unique_ptr<sf::RenderWindow>
+        draw_dead(std::unique_ptr<sf::RenderWindow> window, bool &enter_has_been_pressed);
 
     };
 
